@@ -10,11 +10,11 @@ The app uses [OMDb API](http://omdbapi.com/).
 - [x]  Downloading and caching images
 - [x]  Custom NavigationLink for lazy loading
 - [x]  ScrollView with Lazy Loading
-- []  Image Zoom Pop-up
-- []  Filtering
+- [x]  Image Zoom Pop-up
+- [x]  Settings page
+- [x]  Theme color settings
+- [x]  Filtering
 - []  Share button and Share Sheet
-- []  Settings page
-- []  Theme color settings
 - []  Favorites
 - []  Offline usage capability with CoreData and Directory File
 - []  Offline UI State

@@ -19,6 +19,8 @@ class MainViewModel: ObservableObject {
     
     // Control
     @Published var showingSettingsViewSheet: Bool = false
+    @Published var showingFilterViewSheet: Bool = false
+    @Published var showingOnlyFavorites:  Bool = false
     @Published var selectedMovie: Search? = nil
     @Published var searchText = ""
     @Published var searching = false {
@@ -29,6 +31,9 @@ class MainViewModel: ObservableObject {
     @Published var currentPageNumber: Int = 1
     @Published var isPageLoading = false
     
+    // Filters
+    @Published var searchType: SearchType = .all
+    @Published var searchYear: Int? = nil
     
     var maxPageNumber: Int { Int(ceil(Double(searchResults?.totalResults ?? "10.0")! / 10.0)) }
     var initialState: Bool { searchResults == nil && !isPageLoading }
@@ -55,7 +60,8 @@ class MainViewModel: ObservableObject {
         $searchText
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] (returnedResults) in
-                self?.dataService.getSearchResult(for: returnedResults)
+                guard let self = self else { return }
+                self.dataService.getSearchResult(for: returnedResults, type: self.searchType, year: self.searchYear)
             }
             .store(in: &cancellables)
         
@@ -63,7 +69,21 @@ class MainViewModel: ObservableObject {
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] (returnedPageNumber) in
                 guard let self = self else { return }
-                self.dataService.getSearchResult(for: self.searchText, page: returnedPageNumber)
+                self.dataService.getSearchResult(for: self.searchText, type: self.searchType, year: self.searchYear, page: returnedPageNumber)
+            }
+            .store(in: &cancellables)
+        
+        $searchType
+            .sink { [weak self] (returnedSearchType) in
+                guard let self = self else { return }
+                self.dataService.getSearchResult(for: self.searchText, type: returnedSearchType, year: self.searchYear)
+            }
+            .store(in: &cancellables)
+        
+        $searchYear
+            .sink { [weak self] (returnedSearchYear) in
+                guard let self = self else { return }
+                self.dataService.getSearchResult(for: self.searchText, type: self.searchType, year: returnedSearchYear)
             }
             .store(in: &cancellables)
     }

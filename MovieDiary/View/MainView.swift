@@ -61,6 +61,9 @@ struct MainView: View {
                     vm.setup(dataService: dataService)
                     vm.scrollViewProxy = reader
                 }
+                .sheet(isPresented: $vm.showingFilterViewSheet) {
+                    FilterView(mainVM: vm, tintColor: settingManager.theme.mainColor)
+                }
             }
             .navigationDestination(for: $vm.selectedMovie) { movie in
                 DetailView(movie)
@@ -80,15 +83,18 @@ struct MainView: View {
 extension MainView {
     private var GridHeader: some View {
         VStack(spacing: 0) {
-            HStack(spacing: 0) {
-                Text("Search Movie")
-                    .font(.largeTitle.bold())
+            HStack(alignment: .top, spacing: 0) {
+                VStack(alignment:.leading, spacing: 0) {
+                    Text("Movie Diary")
+                        .font(.largeTitle.bold())
+                    FilterSummary
+                }
                 
                 Spacer()
                 
-                GridButton
+                FavoritesButton
+                FilterButton
                 SettingsButton
-                
             }
             .padding(.horizontal)
             .padding(.top, safeAreaInsets.top)
@@ -98,6 +104,20 @@ extension MainView {
                 .padding(.horizontal)
         }
         .id("top")
+    }
+    
+    private var FilterSummary: some View {
+        HStack(alignment: .top){
+            Text("\(vm.searchType.name),")
+            if let year = vm.searchYear {
+                Text(String(year))
+            }
+            else {
+                Text("All")
+            }
+            Spacer()
+        }
+        .font(.caption)
     }
     
     private var GridFooter: some View {
@@ -345,21 +365,6 @@ extension MainView {
 
 // MARK: - Buttons
 extension MainView {
-    private var GridButton: some View {
-        Button {
-            withAnimation {
-                settingManager.changeGrid()
-            }
-            
-        } label: {
-            Image(systemName: settingManager.gridDesign == .oneColumn ? "rectangle.grid.2x2" : "rectangle.grid.1x2")
-                .font(.title)
-                .padding(.vertical)
-                .padding(.horizontal, 8)
-        }
-        .tint(settingManager.theme.mainColor)
-    }
-    
     private var SettingsButton: some View {
         Button {
             vm.showingSettingsViewSheet.toggle()
@@ -370,7 +375,33 @@ extension MainView {
                 .padding(.leading, 8)
         }
         .sheet(isPresented: $vm.showingSettingsViewSheet) {
-            SettingsView()
+            SettingsView(tintColor: settingManager.theme.mainColor)
+        }
+        .tint(settingManager.theme.mainColor)
+    }
+    
+    private var FilterButton: some View {
+        Button {
+            vm.showingFilterViewSheet.toggle()
+        } label: {
+            Image(systemName: "line.3.horizontal.decrease.circle")
+                .font(.title)
+                .padding(.vertical)
+                .padding(.horizontal, 8)
+        }
+        .tint(settingManager.theme.mainColor)
+    }
+    
+    private var FavoritesButton: some View {
+        Button {
+            //TODO: network check
+            //guard networkMonitor.isConnected else { return }
+            vm.showingOnlyFavorites.toggle()
+        } label: {
+            Image(systemName: vm.showingOnlyFavorites ? "heart.fill" : "heart")
+                .font(.title)
+                .padding(.vertical)
+                .padding(.horizontal, 8)
         }
         .tint(settingManager.theme.mainColor)
     }

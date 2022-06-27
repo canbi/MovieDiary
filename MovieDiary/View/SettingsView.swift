@@ -12,21 +12,32 @@ struct SettingsView: View {
     @StateObject var vm: SettingsViewModel = SettingsViewModel()
     @Environment(\.dismiss) var dismiss
     
+    var tintColor: Color
+    
+    init(tintColor: Color ){
+        self.tintColor = tintColor
+        UITableView.appearance().contentInset.top = -20
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(tintColor)]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(tintColor)]
+    }
+    
     var body: some View {
         NavigationView {
             List {
+                GridSettingsSection
                 ColorSettingsSection
                 DeveloperSection
+                APISection
                 Color.clear.listRowBackground(Color.clear)
             }
             .font(.headline)
-            .accentColor(settingManager.theme.mainColor)
+            .accentColor(tintColor)
             .listStyle(.automatic)
             .navigationTitle("Settings")
             .navigationBarHidden(false)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    BackButton(color: settingManager.theme.mainColor) { dismiss() }
+                    BackButton(color: tintColor) { dismiss() }
                         .padding(.leading, -24)
                 }
             }
@@ -49,7 +60,7 @@ extension SettingsView {
                 .foregroundColor(.white)
                 .padding()
                 .frame(maxWidth: .infinity)
-                .background(RoundedRectangle(cornerRadius: 16).foregroundColor(settingManager.theme.mainColor))
+                .background(RoundedRectangle(cornerRadius: 16).foregroundColor(tintColor))
                 .padding()
         })
         .opacity(vm.isAnythingChanged ? 1 : 0)
@@ -64,7 +75,7 @@ extension SettingsView {
             ForEach(Themes.allCases) { theme in
                 HStack {
                     Text(theme.rawValue)
-                        .foregroundColor(vm.selectedTheme == theme ? settingManager.theme.mainColor : nil)
+                        .foregroundColor(vm.selectedTheme == theme ? tintColor : nil)
                     Spacer()
                     
                     theme.mainColor
@@ -76,7 +87,28 @@ extension SettingsView {
                     vm.selectedTheme = theme
                 }
             }
-            .padding(.vertical)
+            .padding(.vertical, 10)
+        }
+    }
+    
+    private var GridSettingsSection: some View {
+        Section(header: Text("Color Settings".uppercased())){
+            ForEach(GridDesign.allCases) { grid in
+                HStack {
+                    Text(grid.rawValue)
+                        .foregroundColor(vm.selectedGrid == grid ? tintColor : nil)
+                    Spacer()
+                    
+                    Image(systemName: grid.iconName)
+                        .font(.title2)
+                        .padding(.vertical)
+                        .padding(.horizontal, 8)
+                }
+                .contentShape(Rectangle())
+                .onTapGesture {
+                    vm.selectedGrid = grid
+                }
+            }
         }
     }
     
@@ -89,15 +121,27 @@ extension SettingsView {
                 .foregroundColor(.primary)
                 .fixedSize(horizontal: false, vertical: true)
                 .padding(.vertical)
-            Link("Visit Website 🖥️", destination: vm.personalURL)
+            Link("Visit My Website 🖥️", destination: vm.personalURL)
             Link("Contact me on Twitter 🐦", destination: vm.twitterURL)
             Link("See my public projects on GitHub 👨‍💻", destination: vm.githubURL)
+        }
+    }
+    
+    private var APISection: some View {
+        Section(header: Text("Developer")) {
+            Text("The Open Movie Database\nThe OMDb API is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.")
+                .font(.callout)
+                .fontWeight(.medium)
+                .foregroundColor(.primary)
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.vertical)
+            Link("Visit APIs Website 🖥️", destination: vm.apiURL)
         }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(tintColor: .red)
     }
 }

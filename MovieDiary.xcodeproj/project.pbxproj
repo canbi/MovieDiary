@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		360382FD286A29C400B9488C /* FilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360382FC286A29C400B9488C /* FilterView.swift */; };
+		360382FF286A29CC00B9488C /* FilterViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 360382FE286A29CC00B9488C /* FilterViewModel.swift */; };
 		362361532869737500E73456 /* MovieDiaryApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361522869737500E73456 /* MovieDiaryApp.swift */; };
 		362361572869737600E73456 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362361562869737600E73456 /* Assets.xcassets */; };
 		3623615A2869737600E73456 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 362361592869737600E73456 /* Preview Assets.xcassets */; };
@@ -41,6 +43,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		360382FC286A29C400B9488C /* FilterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterView.swift; sourceTree = "<group>"; };
+		360382FE286A29CC00B9488C /* FilterViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterViewModel.swift; sourceTree = "<group>"; };
 		3623614F2869737500E73456 /* MovieDiary.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDiary.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		362361522869737500E73456 /* MovieDiaryApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDiaryApp.swift; sourceTree = "<group>"; };
 		362361562869737600E73456 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -168,6 +172,7 @@
 				36D688F52869D9EA0089B189 /* ImageZoomView.swift */,
 				3623618628698C9D00E73456 /* DetailView.swift */,
 				362361932869AC1600E73456 /* SettingsView.swift */,
+				360382FC286A29C400B9488C /* FilterView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +184,7 @@
 				3623617E286982FA00E73456 /* MainViewModel.swift */,
 				3623618828698CA600E73456 /* DetailViewModel.swift */,
 				362361952869AC2000E73456 /* SettingsViewModel.swift */,
+				360382FE286A29CC00B9488C /* FilterViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -302,6 +308,7 @@
 				3623619B2869AD1E00E73456 /* BackButton.swift in Sources */,
 				3623617D286982F400E73456 /* MainView.swift in Sources */,
 				3623617B2869805700E73456 /* SearchType.swift in Sources */,
+				360382FD286A29C400B9488C /* FilterView.swift in Sources */,
 				3623617728697ACD00E73456 /* SearchResult.swift in Sources */,
 				3623619D2869B18800E73456 /* Navigation.swift in Sources */,
 				3623616D2869751B00E73456 /* SettingManager.swift in Sources */,
@@ -314,6 +321,7 @@
 				3623616F2869759400E73456 /* LocalFileManager.swift in Sources */,
 				362361922869A16400E73456 /* GridDesign.swift in Sources */,
 				362361712869759A00E73456 /* NetworkingManager.swift in Sources */,
+				360382FF286A29CC00B9488C /* FilterViewModel.swift in Sources */,
 				362361752869797400E73456 /* JSONDataService.swift in Sources */,
 				3623616B286974DA00E73456 /* Themes.swift in Sources */,
 				3623618C28699BD500E73456 /* SafeAreaInsetsKey.swift in Sources */,
