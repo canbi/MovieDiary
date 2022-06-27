@@ -6,15 +6,20 @@
 //
 
 import Combine
-import Foundation
+import SwiftUI
 
 class DetailViewModel: ObservableObject {
     let movie: Search
+    private let fileManager: LocalFileManagerImage = .instance
     
     // Data
     private var dataService: JSONDataService!
     @Published var movieInfo: MovieResult? = nil
     private var cancellables = Set<AnyCancellable>()
+    
+    // Control
+    @Published var clickedImage: UIImage? = nil
+    @Published var showingZoomImageView: Bool = false
     
     init(movie: Search){
         self.movie = movie
@@ -32,5 +37,9 @@ class DetailViewModel: ObservableObject {
                 self?.movieInfo = returnedMovieInfo
             }
             .store(in: &cancellables)
+    }
+    
+    func getImage() -> UIImage? {
+        return fileManager.getImage(name: String(movie.imdbID))
     }
 }

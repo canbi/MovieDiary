@@ -8,8 +8,8 @@ The app uses [OMDb API](http://omdbapi.com/).
 - [x]  Data Structure
 - [x]  Networking with Combine and URLSession
 - [x]  Downloading and caching images
-- []  Custom NavigationLink for lazy loading
-- []  ScrollView with Lazy Loading
+- [x]  Custom NavigationLink for lazy loading
+- [x]  ScrollView with Lazy Loading
 - []  Image Zoom Pop-up
 - []  Filtering
 - []  Share button and Share Sheet

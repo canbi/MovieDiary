@@ -10,6 +10,7 @@ import SwiftUI
 struct DetailView: View {
     @EnvironmentObject var settingManager: SettingManager
     @EnvironmentObject var dataService: JSONDataService
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: DetailViewModel
     
@@ -18,7 +19,7 @@ struct DetailView: View {
     }
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .bottom, spacing: 0) {
                     CoverView
@@ -26,7 +27,7 @@ struct DetailView: View {
                     VStack(alignment: .leading) {
                         MainInfoView
                         GenreView
-                        Spacer(minLength: 0)
+                        Spacer(minLength: 8)
                         
                         RatingView
                     }
@@ -58,7 +59,12 @@ struct DetailView: View {
             .onAppear{ vm.setup(dataService: dataService) }
             .onDisappear{ dataService.movieInfo = nil }
         }
+        .sheet(isPresented: $vm.showingZoomImageView, content: {
+            ImageZoomView(image: vm.clickedImage!, tintColor: settingManager.theme.mainColor)
+        })
         .navigationBarHidden(false)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(vm.movieInfo?.title ?? "")
         .navigationBarBackButtonHidden(true)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -77,6 +83,13 @@ extension DetailView {
                     .frame(width: 150)
                     .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.leading)
+                    .overlay(
+                        ZoomButton(action: {
+                            vm.clickedImage = vm.getImage()
+                            vm.showingZoomImageView = true
+                        }
+                    ),
+                        alignment: .bottomTrailing)
             }
         }
     }
@@ -93,7 +106,7 @@ extension DetailView {
                 Text(vm.movieInfo?.rated ?? "Default")
                 Text(vm.movieInfo?.year ?? "Default")
             }
-            .font(.callout)
+            .font(.footnote)
             .foregroundColor(.secondary)
         }
         .padding(.horizontal)
@@ -200,7 +213,7 @@ extension DetailView {
             if let movieInfo = vm.movieInfo {
                 if let score = movieInfo.metacriticScore {
                     HStack {
-                        Image("Metacritic")
+                        Image(colorScheme == .light ? "Metacritic" : "Metacritic-dark")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(height: 18)
@@ -219,7 +232,7 @@ extension DetailView {
                 }
             }
         }
-        .font(.callout)
+        .font(.footnote)
         .foregroundColor(.secondary)
         .padding(.horizontal)
     }

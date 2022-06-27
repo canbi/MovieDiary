@@ -36,6 +36,8 @@
 		3623619B2869AD1E00E73456 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361992869AD1E00E73456 /* BackButton.swift */; };
 		3623619D2869B18800E73456 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623619C2869B18800E73456 /* Navigation.swift */; };
 		3623619F2869B19400E73456 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623619E2869B19400E73456 /* Binding.swift */; };
+		36D688F42869D9630089B189 /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F32869D9630089B189 /* ZoomButton.swift */; };
+		36D688F62869D9EA0089B189 /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F52869D9EA0089B189 /* ImageZoomView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +72,8 @@
 		362361992869AD1E00E73456 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		3623619C2869B18800E73456 /* Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		3623619E2869B19400E73456 /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		36D688F32869D9630089B189 /* ZoomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomButton.swift; sourceTree = "<group>"; };
+		36D688F52869D9EA0089B189 /* ImageZoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,7 @@
 			children = (
 				3623617C286982F400E73456 /* MainView.swift */,
 				36236182286986B300E73456 /* ImageView.swift */,
+				36D688F52869D9EA0089B189 /* ImageZoomView.swift */,
 				3623618628698C9D00E73456 /* DetailView.swift */,
 				362361932869AC1600E73456 /* SettingsView.swift */,
 			);
@@ -211,6 +216,7 @@
 		362361972869AD1E00E73456 /* CustomButtons */ = {
 			isa = PBXGroup;
 			children = (
+				36D688F32869D9630089B189 /* ZoomButton.swift */,
 				362361992869AD1E00E73456 /* BackButton.swift */,
 			);
 			path = CustomButtons;
@@ -292,6 +298,7 @@
 				36236181286985FE00E73456 /* ImageDataService.swift in Sources */,
 				36236173286975AC00E73456 /* Endpoint.swift in Sources */,
 				3623619F2869B19400E73456 /* Binding.swift in Sources */,
+				36D688F62869D9EA0089B189 /* ImageZoomView.swift in Sources */,
 				3623619B2869AD1E00E73456 /* BackButton.swift in Sources */,
 				3623617D286982F400E73456 /* MainView.swift in Sources */,
 				3623617B2869805700E73456 /* SearchType.swift in Sources */,
@@ -303,6 +310,7 @@
 				3623617F286982FA00E73456 /* MainViewModel.swift in Sources */,
 				362361792869803500E73456 /* MovieResult.swift in Sources */,
 				3623618728698C9D00E73456 /* DetailView.swift in Sources */,
+				36D688F42869D9630089B189 /* ZoomButton.swift in Sources */,
 				3623616F2869759400E73456 /* LocalFileManager.swift in Sources */,
 				362361922869A16400E73456 /* GridDesign.swift in Sources */,
 				362361712869759A00E73456 /* NetworkingManager.swift in Sources */,
