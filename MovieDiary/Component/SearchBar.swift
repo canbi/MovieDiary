@@ -18,7 +18,7 @@ struct SearchBar: View {
                 .foregroundColor(Color(UIColor.secondarySystemBackground))
             HStack {
                 Image(systemName: "magnifyingglass")
-                TextField("Search ..", text: $searchText) { startedEditing in
+                TextField("Search", text: $searchText) { startedEditing in
                     if startedEditing {
                         withAnimation {
                             searching = true
@@ -33,7 +33,7 @@ struct SearchBar: View {
                 .keyboardType(.alphabet)
                 .submitLabel(.search)
                 
-                if searching {
+                if searching || !searchText.isEmpty {
                     Button {
                         withAnimation {
                             searchText = ""

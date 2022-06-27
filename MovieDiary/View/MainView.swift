@@ -13,41 +13,47 @@ struct MainView: View {
     @EnvironmentObject var dataService: JSONDataService
     @StateObject var vm: MainViewModel = MainViewModel()
     
-    init() {
-    }
+    let oneColumns = [GridItem(.flexible(maximum: .infinity))]
+    let twoColumns = [GridItem(.flexible(maximum: .infinity),
+                               spacing: 0,
+                               alignment: .topLeading),
+                      GridItem(.flexible(maximum: .infinity),
+                               spacing: 0,
+                               alignment: .topLeading)]
     
     var body: some View {
         NavigationView {
             ScrollViewReader { reader in
                 ScrollView {
-                    let oneColumns = [GridItem(.flexible(maximum: .infinity))]
-                    let twoColumns = [GridItem(.flexible(maximum: .infinity), spacing: 0, alignment: .topLeading),
-                                      GridItem(.flexible(maximum: .infinity), spacing: 0, alignment: .topLeading)]
-                    
-                    LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
-                              alignment: .leading,
-                              spacing: 0,
-                              pinnedViews: .sectionHeaders) {
+                    LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                         Section(header: GridHeader) {
-                            ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
-                                    MovieCell(result)
-                            }
-
-                            
                             if vm.searchResults?.search?.isEmpty ?? true {
-                                Group{
-                                    NoResultView.unredacted()
-                                    Spacer(minLength: 0)
-                                    DummyCell
-                                    DummyCell
-                                    DummyCell
-                                    DummyCell
-                                }
-                                .redacted(reason: .placeholder)
+                                NoResultView
                             }
+                            
+                            LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
+                                      alignment: .leading,
+                                      spacing: 0,
+                                      pinnedViews: .sectionHeaders) {
+                                
+                                ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
+                                    MovieCell(result)
+                                }
+                                
+                                if vm.searchResults?.search?.isEmpty ?? true {
+                                    Group{
+                                        DummyCell
+                                        DummyCell
+                                        DummyCell
+                                        DummyCell
+                                    }
+                                    .redacted(reason: .placeholder)
+                                }
+                            }
+                            .padding(.trailing)
                         }
                     }
-                    .padding(.trailing)
+                    
                 }
             }
             .navigationDestination(for: $vm.selectedMovie) { movie in
@@ -80,12 +86,12 @@ extension MainView {
                 SettingsButton
                 
             }
-            .padding(.leading)
+            .padding(.horizontal)
             .padding(.top, safeAreaInsets.top)
             .background(Rectangle().fill(Color(UIColor.systemBackground)))
             
             SearchBar(searchText: $vm.searchText, searching: $vm.searching)
-                .padding(.leading)
+                .padding(.horizontal)
         }
     }
     
@@ -95,7 +101,7 @@ extension MainView {
                 HStack(alignment: .top){
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color(UIColor.secondarySystemFill))
-                        .frame(width: 140, height: 200)
+                        .frame(width: 130, height: 200)
                     Spacer().frame(width: 10)
                     VStack(alignment: .leading ){
                         Text("Long Dummy Title")
@@ -123,7 +129,7 @@ extension MainView {
                 VStack(alignment: .leading){
                     RoundedRectangle(cornerRadius: 10)
                         .fill(Color(UIColor.secondarySystemFill))
-                        .frame(width: 140, height: 200)
+                        .frame(width: 130, height: 200)
                     
                     Text("Long Dummy Title")
                         .lineLimit(3)
@@ -157,31 +163,37 @@ extension MainView {
         .redacted(reason: .placeholder)
     }
     
+    private var NoResultImage: some View {
+        Image("no-search")
+            .resizable()
+            .scaledToFit()
+            .frame(width: 140)
+    }
+    
+    private var NoResultMessage: some View {
+        VStack(alignment: .trailing, spacing: 0){
+            Image("arrow")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100)
+                .foregroundColor(.primary)
+                .offset(x: 20)
+            
+            Text("Start\nwith\nsearch!")
+                .bold()
+                .font(.title3)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.trailing)
+    }
     
     private var NoResultView: some View {
         HStack(alignment: .center){
-            Image("no-search")
-                .resizable()
-                .scaledToFit()
-                .frame(width: 140, height: 200)
-                .padding(.leading)
+            NoResultImage
             
-            Spacer(minLength: 34)
-            
-            VStack(alignment: .trailing){
-                Image("arrow")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 120, height: 100)
-                    .foregroundColor(.primary)
-                    .offset(x: 40)
-                
-                Text("Start\nwith\nsearch!")
-                    .bold()
-                    .font(.title3)
-                    .multilineTextAlignment(.trailing)
-            }
-            .padding(.trailing)
+            Spacer(minLength: 0)
+                .background(.gray)
+            NoResultMessage
         }
         .padding()
         .background(
@@ -189,7 +201,6 @@ extension MainView {
                 .fill(Color(UIColor.secondarySystemBackground))
         )
         .padding([.top, .horizontal])
-        .fixedSize()
     }
     
     private func MovieCell(_ movie: Search) -> some View {
@@ -212,15 +223,16 @@ extension MainView {
             } else {
                 VStack(alignment: .leading){
                     ImageView(photo: movie)
-                        .frame(width: 140, height: 200)
+                        .frame(width: 130, height: 200)
                     
                     Text(movie.title + "\n\n")
                         .lineLimit(3)
                         .font(.caption.bold())
+                    
                     Group {
                         LabelCapsule(text: movie.type.name)
                         LabelCapsule(text: movie.year)
-                    }.font(.caption)
+                    }
                 }
             }
         }
