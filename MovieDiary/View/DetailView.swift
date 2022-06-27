@@ -10,7 +10,6 @@ import SwiftUI
 struct DetailView: View {
     @EnvironmentObject var settingManager: SettingManager
     @EnvironmentObject var dataService: JSONDataService
-    @Environment(\.colorScheme) var colorScheme
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: DetailViewModel
     
@@ -81,7 +80,6 @@ extension DetailView {
             if let movie = vm.movie {
                 ImageView(photo: movie)
                     .frame(width: 150)
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
                     .padding(.leading)
                     .overlay(
                         ZoomButton(action: {
@@ -213,7 +211,7 @@ extension DetailView {
             if let movieInfo = vm.movieInfo {
                 if let score = movieInfo.metacriticScore {
                     HStack {
-                        Image(colorScheme == .light ? "Metacritic" : "Metacritic-dark")
+                        Image("Metacritic")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(height: 18)

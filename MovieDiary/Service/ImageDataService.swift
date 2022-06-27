@@ -36,6 +36,10 @@ extension ImageDataService {
     }
     
     private func downloadImage() {
+        guard photo.poster != "N/A" else {
+            self.image = UIImage(named: "no-image")
+            return
+        }
         guard let url = URL(string: photo.poster) else { return }
         
         imageSubscription = NetworkingManager.download(url: url)

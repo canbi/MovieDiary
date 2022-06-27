@@ -28,8 +28,11 @@ extension JSONDataService {
                          type: SearchType? = nil,
                          year: Int? = nil,
                          page: Int = 1){
-        let endpoint = Endpoint.search(for: searchText, type: type, year: year, page: page)
         
+        let searchText = searchText.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !searchText.isEmpty else { return }
+        
+        let endpoint = Endpoint.search(for: searchText, type: type, year: year, page: page)
         guard let url = endpoint.url else { return }
         
         searchSubscription = NetworkingManager.download(url: url)

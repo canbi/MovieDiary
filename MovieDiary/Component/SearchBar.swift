@@ -32,6 +32,21 @@ struct SearchBar: View {
                 .disableAutocorrection(true)
                 .keyboardType(.alphabet)
                 .submitLabel(.search)
+                
+                if searching {
+                    Button {
+                        withAnimation {
+                            searchText = ""
+                            UIApplication.shared.dismissKeyboard()
+                        }
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .imageScale(.medium)
+                            .foregroundColor(Color(.systemGray3))
+                            .padding(.horizontal)
+                            .padding(.vertical, 8)
+                    }
+                }
             }
             .foregroundColor(.gray)
             .padding(.leading, 13)

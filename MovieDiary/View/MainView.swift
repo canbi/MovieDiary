@@ -21,23 +21,33 @@ struct MainView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     let oneColumns = [GridItem(.flexible(maximum: .infinity))]
-                    let twoColumns = [GridItem(.flexible(maximum: .infinity), alignment: .topLeading),
-                                      GridItem(.flexible(maximum: .infinity), alignment: .topLeading)]
+                    let twoColumns = [GridItem(.flexible(maximum: .infinity), spacing: 0, alignment: .topLeading),
+                                      GridItem(.flexible(maximum: .infinity), spacing: 0, alignment: .topLeading)]
                     
                     LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
                               alignment: .leading,
-                              spacing: 0, pinnedViews: .sectionHeaders) {
+                              spacing: 0,
+                              pinnedViews: .sectionHeaders) {
                         Section(header: GridHeader) {
-                            if let searchResult = vm.searchResults {
-                                ForEach(searchResult.search, id:\.imdbID) { result in
+                            ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
                                     MovieCell(result)
+                            }
+
+                            
+                            if vm.searchResults?.search?.isEmpty ?? true {
+                                Group{
+                                    NoResultView.unredacted()
+                                    Spacer(minLength: 0)
+                                    DummyCell
+                                    DummyCell
+                                    DummyCell
+                                    DummyCell
                                 }
-                            } else {
-                                Text("You didnt search anything")
-                                    .padding()
+                                .redacted(reason: .placeholder)
                             }
                         }
                     }
+                    .padding(.trailing)
                 }
             }
             .navigationDestination(for: $vm.selectedMovie) { movie in
@@ -47,7 +57,6 @@ struct MainView: View {
             .navigationBarHidden(true)
             .onAppear{
                 vm.setup(dataService: dataService)
-                dataService.getSearchResult(for: "game of thrones")
             }
             .gesture(DragGesture()
                 .onChanged({ _ in
@@ -67,30 +76,121 @@ extension MainView {
                 
                 Spacer()
                 
-                if vm.searching {
-                    Button("Cancel") {
-                        vm.searchText = ""
-                        withAnimation {
-                            vm.searching = false
-                            UIApplication.shared.dismissKeyboard()
-                        }
-                    }
-                } else {
-                    GridButton
-                    SettingsButton
-                }
+                GridButton
+                SettingsButton
                 
             }
+            .padding(.leading)
             .padding(.top, safeAreaInsets.top)
             .background(Rectangle().fill(Color(UIColor.systemBackground)))
             
             SearchBar(searchText: $vm.searchText, searching: $vm.searching)
-                .padding(.trailing)
+                .padding(.leading)
         }
-        .padding(.leading)
-        
     }
     
+    private var DummyCell: some View {
+        Group {
+            if settingManager.gridDesign == .oneColumn {
+                HStack(alignment: .top){
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(UIColor.secondarySystemFill))
+                        .frame(width: 140, height: 200)
+                    Spacer().frame(width: 10)
+                    VStack(alignment: .leading ){
+                        Text("Long Dummy Title")
+                            .bold()
+                            .font(.title3)
+                        
+                        Text("Movie")
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundColor(Color(UIColor.secondarySystemFill))
+                            )
+                        
+                        Text("2022")
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundColor(Color(UIColor.secondarySystemFill))
+                            )
+                        
+                        Spacer()
+                    }
+                }
+            } else {
+                VStack(alignment: .leading){
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(Color(UIColor.secondarySystemFill))
+                        .frame(width: 140, height: 200)
+                    
+                    Text("Long Dummy Title")
+                        .lineLimit(3)
+                        .font(.caption.bold())
+                    Group {
+                        Text("Movie")
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundColor(Color(UIColor.secondarySystemFill))
+                            )
+                        
+                        Text("2022")
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundColor(Color(UIColor.secondarySystemFill))
+                            )
+                    }
+                    .font(.caption)
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(UIColor.secondarySystemBackground))
+        )
+        .padding([.top, .leading])
+        .redacted(reason: .placeholder)
+    }
+    
+    
+    private var NoResultView: some View {
+        HStack(alignment: .center){
+            Image("no-search")
+                .resizable()
+                .scaledToFit()
+                .frame(width: 140, height: 200)
+                .padding(.leading)
+            
+            Spacer(minLength: 34)
+            
+            VStack(alignment: .trailing){
+                Image("arrow")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 120, height: 100)
+                    .foregroundColor(.primary)
+                    .offset(x: 40)
+                
+                Text("Start\nwith\nsearch!")
+                    .bold()
+                    .font(.title3)
+                    .multilineTextAlignment(.trailing)
+            }
+            .padding(.trailing)
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(UIColor.secondarySystemBackground))
+        )
+        .padding([.top, .horizontal])
+        .fixedSize()
+    }
     
     private func MovieCell(_ movie: Search) -> some View {
         Group {
@@ -133,11 +233,13 @@ extension MainView {
         .onTapGesture {
             vm.selectedMovie = movie
         }
-        .padding(settingManager.gridDesign == .oneColumn ? [.horizontal, .top] : [.top, .leading])
+        .padding(.top)
+        .padding(.leading)
     }
     
     private func LabelCapsule(text: String) -> some View {
         Text(text)
+            .foregroundColor(.white)
             .padding(6)
             .background(
                 RoundedRectangle(cornerRadius: 12)
@@ -171,7 +273,6 @@ extension MainView {
                 .font(.title)
                 .padding(.vertical)
                 .padding(.leading, 8)
-                .padding(.trailing)
         }
         .sheet(isPresented: $vm.showingSettingsViewSheet) {
             SettingsView()

@@ -34,5 +34,12 @@ class MainViewModel: ObservableObject {
                 self?.searchResults = returnedResults
             }
             .store(in: &cancellables)
+        
+        $searchText
+            .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
+            .sink { [weak self] (returnedResults) in
+                self?.dataService.getSearchResult(for: returnedResults)
+            }
+            .store(in: &cancellables)
     }
 }
