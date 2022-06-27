@@ -1,0 +1,43 @@
+//
+//  SearchResult.swift
+//  MovieDiary
+//
+//  Created by Can Bi on 27.06.2022.
+//
+
+import Foundation
+
+// MARK: - Welcome
+struct SearchResult: Codable {
+    let search: [Search]
+    let totalResults, response: String
+
+    enum CodingKeys: String, CodingKey {
+        case search = "Search"
+        case totalResults
+        case response = "Response"
+    }
+}
+
+// MARK: - Search
+struct Search: Codable {
+    let title, year, imdbID: String
+    let type: SearchType
+    let poster: String
+
+    enum CodingKeys: String, CodingKey {
+        case title = "Title"
+        case year = "Year"
+        case imdbID
+        case type = "Type"
+        case poster = "Poster"
+    }
+    
+    static var previewData: Search {
+        return .init(title: "Preview",
+                     year: "2022",
+                     imdbID: "imdbID",
+                     type: .series,
+                     poster: "preview.poster")
+    }
+}

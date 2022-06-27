@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct MovieDiaryApp: App {
+    let dataService: JSONDataService = JSONDataService()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
+                .environmentObject(dataService)
         }
     }
 }
