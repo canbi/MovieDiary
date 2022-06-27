@@ -33,11 +33,10 @@ struct SearchBar: View {
                 .keyboardType(.alphabet)
                 .submitLabel(.search)
                 
-                if searching || !searchText.isEmpty {
+                if !searchText.isEmpty {
                     Button {
                         withAnimation {
-                            searchText = ""
-                            UIApplication.shared.dismissKeyboard()
+                            deleteText()
                         }
                     } label: {
                         Image(systemName: "xmark.circle.fill")
@@ -53,5 +52,10 @@ struct SearchBar: View {
         }
         .frame(height: 40)
         .cornerRadius(13)
+    }
+    
+    func deleteText(){
+        searchText = ""
+        UIApplication.shared.dismissKeyboard()
     }
 }
