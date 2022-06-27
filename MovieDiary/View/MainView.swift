@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MainView: View {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
+    @EnvironmentObject var settingManager: SettingManager
     @EnvironmentObject var dataService: JSONDataService
     @StateObject var vm: MainViewModel = MainViewModel()
     
@@ -23,21 +24,20 @@ struct MainView: View {
             ScrollViewReader { reader in
                 ScrollView {
                     let oneColumns = [GridItem(.flexible(maximum: .infinity))]
-                    /*let twoColumns = [GridItem(.flexible(maximum: .infinity)),
-                     GridItem(.flexible(maximum: .infinity))]*/
+                    let twoColumns = [GridItem(.flexible(maximum: .infinity), alignment: .topLeading),
+                                      GridItem(.flexible(maximum: .infinity), alignment: .topLeading)]
                     
-                    LazyVGrid(columns: oneColumns,
+                    LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
                               alignment: .leading,
                               spacing: 0, pinnedViews: .sectionHeaders) {
                         Section(header: GridHeader) {
                             if let searchResult = vm.searchResults {
-                                
                                 ForEach(searchResult.search, id:\.imdbID) { result in
                                     MovieCell(result)
                                 }
-                                
                             } else {
                                 Text("You didnt search anything")
+                                    .padding()
                             }
                         }
                     }
@@ -61,12 +61,11 @@ struct MainView: View {
 extension MainView {
     private var GridHeader: some View {
         VStack(spacing: 0) {
-            HStack {
+            HStack(spacing: 0) {
                 Text("Search Movie")
                     .font(.largeTitle.bold())
                 
                 Spacer()
-                
                 
                 if searching {
                     Button("Cancel") {
@@ -77,9 +76,8 @@ extension MainView {
                         }
                     }
                 } else {
-                    Button("Help") {
-                        print("Help tapped!")
-                    }
+                    GridButton
+                    SettingsButton
                 }
                 
             }
@@ -87,24 +85,43 @@ extension MainView {
             .background(Rectangle().fill(Color(UIColor.systemBackground)))
             
             SearchBar(searchText: $searchText, searching: $searching)
+                .padding(.trailing)
         }
-        .padding(.horizontal)
+        .padding(.leading)
         
     }
     
     
     private func MovieCell(_ movie: Search) -> some View {
-        HStack(alignment: .top){
-            ImageView(photo: movie)
-                .frame(maxWidth: 120)
-            VStack(alignment: .leading ){
-                Text(movie.title)
-                    .bold()
-                    .font(.title3)
-                
-                LabelCapsule(text: movie.type.name)
-                LabelCapsule(text: movie.year)
-                Spacer()
+        Group {
+            if settingManager.gridDesign == .oneColumn {
+                HStack(alignment: .top){
+                    ImageView(photo: movie)
+                        .frame(maxWidth: 140)
+                    Spacer().frame(width: 10)
+                    VStack(alignment: .leading ){
+                        Text(movie.title)
+                            .bold()
+                            .font(.title3)
+                        
+                        LabelCapsule(text: movie.type.name)
+                        LabelCapsule(text: movie.year)
+                        Spacer()
+                    }
+                }
+            } else {
+                VStack(alignment: .leading){
+                    ImageView(photo: movie)
+                        .frame(width: 140, height: 200)
+                    
+                    Text(movie.title + "\n\n")
+                        .lineLimit(3)
+                        .font(.caption.bold())
+                    Group {
+                        LabelCapsule(text: movie.type.name)
+                        LabelCapsule(text: movie.year)
+                    }.font(.caption)
+                }
             }
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -113,7 +130,7 @@ extension MainView {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.secondarySystemBackground))
         )
-        .padding([.horizontal, .top])
+        .padding(settingManager.gridDesign == .oneColumn ? [.horizontal, .top] : [.top, .leading])
     }
     
     private func LabelCapsule(text: String) -> some View {
@@ -121,8 +138,42 @@ extension MainView {
             .padding(6)
             .background(
                 RoundedRectangle(cornerRadius: 12)
-                    .fill(Color(UIColor.tertiarySystemFill))
+                    .fill(settingManager.theme.mainColor)
             )
+    }
+}
+
+// MARK: - Buttons
+extension MainView {
+    private var GridButton: some View {
+        Button {
+            withAnimation {
+                settingManager.changeGrid()
+            }
+            
+        } label: {
+            Image(systemName: settingManager.gridDesign == .oneColumn ? "rectangle.grid.2x2" : "rectangle.grid.1x2")
+                .font(.title)
+                .padding(.vertical)
+                .padding(.horizontal, 8)
+        }
+        .tint(settingManager.theme.mainColor)
+    }
+    
+    private var SettingsButton: some View {
+        Button {
+            vm.showingSettingsViewSheet.toggle()
+        } label: {
+            Image(systemName: "gear")
+                .font(.title)
+                .padding(.vertical)
+                .padding(.leading, 8)
+                .padding(.trailing)
+        }
+        .sheet(isPresented: $vm.showingSettingsViewSheet) {
+            SettingsView()
+        }
+        .tint(settingManager.theme.mainColor)
     }
 }
 
@@ -133,5 +184,6 @@ struct MainView_Previews: PreviewProvider {
             MainView().preferredColorScheme(.dark)
         }
         .environmentObject(JSONDataService.previewInstance)
+        .environmentObject(SettingManager.previewInstance)
     }
 }

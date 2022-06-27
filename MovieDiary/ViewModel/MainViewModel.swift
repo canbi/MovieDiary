@@ -14,6 +14,9 @@ class MainViewModel: ObservableObject {
     @Published var searchResults: SearchResult? = nil
     private var cancellables = Set<AnyCancellable>()
     
+    // Control
+    @Published var showingSettingsViewSheet: Bool = false
+    
     
     init(){  
     }

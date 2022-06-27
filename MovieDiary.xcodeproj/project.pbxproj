@@ -30,6 +30,11 @@
 		3623618C28699BD500E73456 /* SafeAreaInsetsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623618B28699BD500E73456 /* SafeAreaInsetsKey.swift */; };
 		3623618E28699CC300E73456 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623618D28699CC300E73456 /* UIApplication.swift */; };
 		3623619028699CE700E73456 /* SearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623618F28699CE700E73456 /* SearchBar.swift */; };
+		362361922869A16400E73456 /* GridDesign.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361912869A16400E73456 /* GridDesign.swift */; };
+		362361942869AC1600E73456 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361932869AC1600E73456 /* SettingsView.swift */; };
+		362361962869AC2000E73456 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361952869AC2000E73456 /* SettingsViewModel.swift */; };
+		3623619A2869AD1E00E73456 /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361982869AD1E00E73456 /* ZoomButton.swift */; };
+		3623619B2869AD1E00E73456 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361992869AD1E00E73456 /* BackButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +63,11 @@
 		3623618B28699BD500E73456 /* SafeAreaInsetsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInsetsKey.swift; sourceTree = "<group>"; };
 		3623618D28699CC300E73456 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		3623618F28699CE700E73456 /* SearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBar.swift; sourceTree = "<group>"; };
+		362361912869A16400E73456 /* GridDesign.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridDesign.swift; sourceTree = "<group>"; };
+		362361932869AC1600E73456 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		362361952869AC2000E73456 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		362361982869AD1E00E73456 /* ZoomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomButton.swift; sourceTree = "<group>"; };
+		362361992869AD1E00E73456 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,6 +160,7 @@
 				3623617C286982F400E73456 /* MainView.swift */,
 				36236182286986B300E73456 /* ImageView.swift */,
 				3623618628698C9D00E73456 /* DetailView.swift */,
+				362361932869AC1600E73456 /* SettingsView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -160,6 +171,7 @@
 				36236184286986B800E73456 /* ImageViewModel.swift */,
 				3623617E286982FA00E73456 /* MainViewModel.swift */,
 				3623618828698CA600E73456 /* DetailViewModel.swift */,
+				362361952869AC2000E73456 /* SettingsViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -167,6 +179,7 @@
 		362361672869742700E73456 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				362361972869AD1E00E73456 /* CustomButtons */,
 				3623618F28699CE700E73456 /* SearchBar.swift */,
 			);
 			path = Component;
@@ -175,6 +188,7 @@
 		36236169286974D400E73456 /* Enums */ = {
 			isa = PBXGroup;
 			children = (
+				362361912869A16400E73456 /* GridDesign.swift */,
 				3623616A286974DA00E73456 /* Themes.swift */,
 				3623617A2869805700E73456 /* SearchType.swift */,
 			);
@@ -188,6 +202,15 @@
 				3623618D28699CC300E73456 /* UIApplication.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		362361972869AD1E00E73456 /* CustomButtons */ = {
+			isa = PBXGroup;
+			children = (
+				362361982869AD1E00E73456 /* ZoomButton.swift */,
+				362361992869AD1E00E73456 /* BackButton.swift */,
+			);
+			path = CustomButtons;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -262,8 +285,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				3623618928698CA600E73456 /* DetailViewModel.swift in Sources */,
+				362361962869AC2000E73456 /* SettingsViewModel.swift in Sources */,
 				36236181286985FE00E73456 /* ImageDataService.swift in Sources */,
 				36236173286975AC00E73456 /* Endpoint.swift in Sources */,
+				3623619B2869AD1E00E73456 /* BackButton.swift in Sources */,
+				3623619A2869AD1E00E73456 /* ZoomButton.swift in Sources */,
 				3623617D286982F400E73456 /* MainView.swift in Sources */,
 				3623617B2869805700E73456 /* SearchType.swift in Sources */,
 				3623617728697ACD00E73456 /* SearchResult.swift in Sources */,
@@ -274,6 +300,7 @@
 				362361792869803500E73456 /* MovieResult.swift in Sources */,
 				3623618728698C9D00E73456 /* DetailView.swift in Sources */,
 				3623616F2869759400E73456 /* LocalFileManager.swift in Sources */,
+				362361922869A16400E73456 /* GridDesign.swift in Sources */,
 				362361712869759A00E73456 /* NetworkingManager.swift in Sources */,
 				362361752869797400E73456 /* JSONDataService.swift in Sources */,
 				3623616B286974DA00E73456 /* Themes.swift in Sources */,
@@ -281,6 +308,7 @@
 				3623619028699CE700E73456 /* SearchBar.swift in Sources */,
 				36236183286986B300E73456 /* ImageView.swift in Sources */,
 				362361532869737500E73456 /* MovieDiaryApp.swift in Sources */,
+				362361942869AC1600E73456 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
