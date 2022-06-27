@@ -34,10 +34,10 @@ struct Search: Codable {
     }
     
     static var previewData: Search {
-        return .init(title: "Preview",
-                     year: "2022",
-                     imdbID: "imdbID",
-                     type: .series,
-                     poster: "preview.poster")
+        return .init(title: "The Social Network",
+                     year: "2010",
+                     imdbID: "tt1285016",
+                     type: .movie,
+                     poster: "https://m.media-amazon.com/images/M/MV5BOGUyZDUxZjEtMmIzMC00MzlmLTg4MGItZWJmMzBhZjE0Mjc1XkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_SX300.jpg")
     }
 }

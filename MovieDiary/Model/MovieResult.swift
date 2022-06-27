@@ -16,9 +16,24 @@ struct MovieResult: Codable {
     let poster: String
     let ratings: [Rating]
     let metascore, imdbRating, imdbVotes, imdbID: String
-    let type, dvd, boxOffice, production: String
-    let website, response: String
-
+    let type: String
+    let dvd, boxOffice, production, website: String?
+    let totalSeasons: String?
+    let response: String
+    
+    var genres: [String] {
+        genre.components(separatedBy: ", ")
+    }
+    
+    var metacriticScore: String? {
+        ratings.first(where: { $0.source == "Metacritic"} )?.value
+    }
+    
+    var rottenTomatoesScore: String? {
+        ratings.first(where: { $0.source == "Rotten Tomatoes"} )?.value
+    }
+    
+    
     enum CodingKeys: String, CodingKey {
         case title = "Title"
         case year = "Year"
@@ -42,6 +57,7 @@ struct MovieResult: Codable {
         case boxOffice = "BoxOffice"
         case production = "Production"
         case website = "Website"
+        case totalSeasons
         case response = "Response"
     }
 }

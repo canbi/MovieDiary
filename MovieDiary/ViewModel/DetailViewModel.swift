@@ -23,6 +23,7 @@ class DetailViewModel: ObservableObject {
     func setup(dataService: JSONDataService){
         self.dataService = dataService
         addSubscribers()
+        dataService.getMovieInfo(for: movie.imdbID, plot: "full")
     }
     
     func addSubscribers() {
