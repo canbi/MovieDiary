@@ -66,12 +66,10 @@ extension SettingsView {
                     Text(theme.rawValue)
                         .foregroundColor(vm.selectedTheme == theme ? settingManager.theme.mainColor : nil)
                     Spacer()
-                    Group {
-                        theme.mainColor
-                        theme.secondaryColor
-                    }
-                    .clipShape(Circle())
-                    .frame(width: 30, height: 30)
+                    
+                    theme.mainColor
+                        .clipShape(Circle())
+                        .frame(width: 30, height: 30)
                 }
                 .contentShape(Rectangle())
                 .onTapGesture {

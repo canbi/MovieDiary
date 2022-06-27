@@ -38,7 +38,7 @@ extension Endpoint {
     }
     
     static func getMovie(for imdbId: String,
-                         plot: String = "full") -> Endpoint {
+                         plot: String) -> Endpoint {
         Endpoint(path: "", queryItems: [URLQueryItem(name: "i", value: imdbId),
                                         URLQueryItem(name: "apikey", value: apiKey),
                                         URLQueryItem(name: "plot", value: plot)])

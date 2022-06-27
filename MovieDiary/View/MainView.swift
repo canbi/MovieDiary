@@ -13,9 +13,6 @@ struct MainView: View {
     @EnvironmentObject var dataService: JSONDataService
     @StateObject var vm: MainViewModel = MainViewModel()
     
-    @State var searchText = ""
-    @State var searching = false
-    
     init() {
     }
     
@@ -43,6 +40,9 @@ struct MainView: View {
                     }
                 }
             }
+            .navigationDestination(for: $vm.selectedMovie) { movie in
+                DetailView(movie)
+            }
             .ignoresSafeArea(.container, edges: .top)
             .navigationBarHidden(true)
             .onAppear{
@@ -67,11 +67,11 @@ extension MainView {
                 
                 Spacer()
                 
-                if searching {
+                if vm.searching {
                     Button("Cancel") {
-                        searchText = ""
+                        vm.searchText = ""
                         withAnimation {
-                            searching = false
+                            vm.searching = false
                             UIApplication.shared.dismissKeyboard()
                         }
                     }
@@ -84,7 +84,7 @@ extension MainView {
             .padding(.top, safeAreaInsets.top)
             .background(Rectangle().fill(Color(UIColor.systemBackground)))
             
-            SearchBar(searchText: $searchText, searching: $searching)
+            SearchBar(searchText: $vm.searchText, searching: $vm.searching)
                 .padding(.trailing)
         }
         .padding(.leading)
@@ -130,6 +130,9 @@ extension MainView {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.secondarySystemBackground))
         )
+        .onTapGesture {
+            vm.selectedMovie = movie
+        }
         .padding(settingManager.gridDesign == .oneColumn ? [.horizontal, .top] : [.top, .leading])
     }
     

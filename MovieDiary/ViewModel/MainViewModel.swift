@@ -16,7 +16,9 @@ class MainViewModel: ObservableObject {
     
     // Control
     @Published var showingSettingsViewSheet: Bool = false
-    
+    @Published var selectedMovie: Search? = nil
+    @Published var searchText = ""
+    @Published var searching = false
     
     init(){  
     }

@@ -12,11 +12,13 @@ class JSONDataService: ObservableObject {
     static var previewInstance = JSONDataService()
     
     @Published var searchResult: SearchResult!
+    @Published var movieInfo: MovieResult!
     
     init(){
     }
     
     var searchSubscription: AnyCancellable?
+    var movieInfoSubscription: AnyCancellable?
 }
 
 
@@ -37,6 +39,23 @@ extension JSONDataService {
                 guard let self = self else { return }
                 self.searchResult = returnedResults
                 self.searchSubscription?.cancel()
+            })
+    }
+    
+    func getMovieInfo(for imdbId: String,
+                      plot: String = "full"){
+        
+        let endpoint = Endpoint.getMovie(for: imdbId, plot: plot)
+        
+        guard let url = endpoint.url else { return }
+        
+        movieInfoSubscription = NetworkingManager.download(url: url)
+            .decode(type: MovieResult.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedMovie) in
+                guard let self = self else { return }
+                self.movieInfo = returnedMovie
+                self.movieInfoSubscription?.cancel()
             })
     }
 }
