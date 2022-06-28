@@ -36,8 +36,5 @@ struct ImageZoomView: View {
         PhotoDetailView(image: image)
             .ignoresSafeArea()
             .overlay(BackButton(color: tintColor) { dismiss() }.padding(.leading, -6), alignment: .topLeading)
-            .onAppear {
-                print("hello")
-            }
     }
 }

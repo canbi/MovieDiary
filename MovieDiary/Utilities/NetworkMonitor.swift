@@ -13,7 +13,7 @@ final class NetworkMonitor: ObservableObject {
     let monitor = NWPathMonitor()
     let queue = DispatchQueue(label: "Monitor")
     
-    @Published var isConnected = false
+    @Published var isConnected = true
     
     init() {
         monitor.pathUpdateHandler =  { [weak self] path in

@@ -73,7 +73,6 @@ class MainViewModel: ObservableObject {
         self.dataService = dataService
         self.networkMonitor = networkMonitor
         self.coreDataService = cdDataService
-        self.showingOnlyFavorites = true
         addSubscribers()
         
         // Core Data Favorites
@@ -86,10 +85,11 @@ class MainViewModel: ObservableObject {
             .sink { [weak self] (isConnected) in
                 guard let self = self else { return }
                 if isConnected {
-                    self.showingOnlyFavorites = false
                     self.isInternetConnected = true
                     self.networkMonitor!.stopMonitoring()
                     self.networkSubscription?.cancel()
+                } else {
+                    self.showingOnlyFavorites = true
                 }
             }
         

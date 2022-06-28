@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Sublime Light" translatesAutoresizingMaskIntoConstraints="NO" id="eBe-Hn-wQ8">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="movie-intro" translatesAutoresizingMaskIntoConstraints="NO" id="Akg-WO-JMR">
+                                <rect key="frame" x="97" y="240" width="220" height="320"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="DHQ-zd-U28"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Movie Diary" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KkM-jn-TT0">
+                                <rect key="frame" x="100.5" y="486" width="213" height="47"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="39"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Bcu-3y-fUS"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstItem="eBe-Hn-wQ8" firstAttribute="top" secondItem="Ze5-6b-2t3" secondAttribute="top" id="1LZ-Ke-RHA"/>
+                            <constraint firstItem="KkM-jn-TT0" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="AA6-nu-Xep"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="Akg-WO-JMR" secondAttribute="bottom" constant="302" id="Ffr-MZ-P3t"/>
+                            <constraint firstItem="eBe-Hn-wQ8" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="QJC-Wm-pFS"/>
+                            <constraint firstItem="Bcu-3y-fUS" firstAttribute="bottom" secondItem="KkM-jn-TT0" secondAttribute="bottom" constant="329" id="b26-nG-JCo"/>
+                            <constraint firstItem="eBe-Hn-wQ8" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gtH-Be-fY3"/>
+                            <constraint firstItem="Akg-WO-JMR" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="gyM-MH-yQG"/>
+                            <constraint firstAttribute="trailing" secondItem="eBe-Hn-wQ8" secondAttribute="trailing" id="y2f-xP-TK6"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52.173913043478265" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Sublime Light" width="960" height="540"/>
+        <image name="movie-intro" width="320" height="320"/>
+    </resources>
+</document>

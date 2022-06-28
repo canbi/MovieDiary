@@ -46,6 +46,7 @@
 		3649F9FA286AD4EF00E62D42 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F9286AD4EF00E62D42 /* NetworkMonitor.swift */; };
 		3649F9FC286ADB9400E62D42 /* ImageOfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9FB286ADB9400E62D42 /* ImageOfflineView.swift */; };
 		3649F9FE286ADB9900E62D42 /* ImageOfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9FD286ADB9900E62D42 /* ImageOfflineViewModel.swift */; };
+		3649FA02286AFC0E00E62D42 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3649FA01286AFC0E00E62D42 /* LaunchScreen.storyboard */; };
 		36D688F42869D9630089B189 /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F32869D9630089B189 /* ZoomButton.swift */; };
 		36D688F62869D9EA0089B189 /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F52869D9EA0089B189 /* ImageZoomView.swift */; };
 /* End PBXBuildFile section */
@@ -92,6 +93,7 @@
 		3649F9F9286AD4EF00E62D42 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		3649F9FB286ADB9400E62D42 /* ImageOfflineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOfflineView.swift; sourceTree = "<group>"; };
 		3649F9FD286ADB9900E62D42 /* ImageOfflineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOfflineViewModel.swift; sourceTree = "<group>"; };
+		3649FA01286AFC0E00E62D42 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		36D688F32869D9630089B189 /* ZoomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomButton.swift; sourceTree = "<group>"; };
 		36D688F52869D9EA0089B189 /* ImageZoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -201,8 +203,8 @@
 		362361662869742300E73456 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				36236184286986B800E73456 /* ImageViewModel.swift */,
 				3623617E286982FA00E73456 /* MainViewModel.swift */,
+				36236184286986B800E73456 /* ImageViewModel.swift */,
 				3623618828698CA600E73456 /* DetailViewModel.swift */,
 				362361952869AC2000E73456 /* SettingsViewModel.swift */,
 				360382FE286A29CC00B9488C /* FilterViewModel.swift */,
@@ -214,8 +216,9 @@
 		362361672869742700E73456 /* Component */ = {
 			isa = PBXGroup;
 			children = (
+				3649FA00286AFBFF00E62D42 /* SearchBar */,
+				3649F9FF286AFBF800E62D42 /* LaunchScreen */,
 				362361972869AD1E00E73456 /* CustomButtons */,
-				3623618F28699CE700E73456 /* SearchBar.swift */,
 			);
 			path = Component;
 			sourceTree = "<group>";
@@ -258,6 +261,22 @@
 				3649F9F2286AC78900E62D42 /* CDMovie+CoreDataProperties.swift */,
 			);
 			path = CoreData;
+			sourceTree = "<group>";
+		};
+		3649F9FF286AFBF800E62D42 /* LaunchScreen */ = {
+			isa = PBXGroup;
+			children = (
+				3649FA01286AFC0E00E62D42 /* LaunchScreen.storyboard */,
+			);
+			path = LaunchScreen;
+			sourceTree = "<group>";
+		};
+		3649FA00286AFBFF00E62D42 /* SearchBar */ = {
+			isa = PBXGroup;
+			children = (
+				3623618F28699CE700E73456 /* SearchBar.swift */,
+			);
+			path = SearchBar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -319,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				362361612869739400E73456 /* README.md in Resources */,
+				3649FA02286AFC0E00E62D42 /* LaunchScreen.storyboard in Resources */,
 				3623615A2869737600E73456 /* Preview Assets.xcassets in Resources */,
 				362361572869737600E73456 /* Assets.xcassets in Resources */,
 			);
@@ -501,9 +521,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Movie Diary";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
@@ -532,9 +554,11 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = MovieDiary/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Movie Diary";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait UIInterfaceOrientationPortrait";
