@@ -37,12 +37,14 @@ class MainViewModel: ObservableObject {
         }
     }
     @Published var currentPageNumber: Int = 1
+    @Published var isInternetConnected: Bool = false
     @Published var isPageLoading = false
     
     // Filters
     @Published var searchType: SearchType = .all
     @Published var searchYear: Int? = nil
     
+    // States
     var maxPageNumber: Int { Int(ceil(Double(searchResults?.totalResults ?? "10.0")! / 10.0)) }
     var initialState: Bool { searchResults == nil && !isPageLoading && !showingOnlyFavorites }
     private var notFoundOnlineState: Bool { searchResults?.search?.isEmpty ?? true && !isPageLoading}
@@ -62,6 +64,7 @@ class MainViewModel: ObservableObject {
         return searchResults == nil || isPageLoading
     }
     var showPageNumberState: Bool { searchResults != nil && !(searchResults?.search?.isEmpty ?? true) && !showingOnlyFavorites }
+    var noInternetBannerState: Bool { !isInternetConnected && !showingOnlyFavorites }
     
     init(){
     }
@@ -84,6 +87,7 @@ class MainViewModel: ObservableObject {
                 guard let self = self else { return }
                 if isConnected {
                     self.showingOnlyFavorites = false
+                    self.isInternetConnected = true
                     self.networkMonitor!.stopMonitoring()
                     self.networkSubscription?.cancel()
                 }

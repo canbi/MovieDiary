@@ -29,7 +29,9 @@ struct MainView: View {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                         Section(header: GridHeader, footer: GridFooter) {
-                            if vm.initialState {
+                            if vm.noInternetBannerState {
+                                NoInternetView
+                            } else if vm.initialState {
                                 NoSearchView
                             } else if vm.notFoundState {
                                 NoResultView
@@ -423,19 +425,9 @@ extension MainView {
         .padding(.trailing)
     }
     
-    private var NoResultMessage: some View {
+    private func NoBannerMessage(_ text: String) -> some View {
         VStack(alignment: .trailing, spacing: 0){
-            Text("Not Found in this filters!")
-                .bold()
-                .font(.title3)
-                .multilineTextAlignment(.center)
-        }
-        .padding(.trailing)
-    }
-    
-    private var NoFavoritesMessage: some View {
-        VStack(alignment: .trailing, spacing: 0){
-            Text("No favorites in this filters!")
+            Text(text)
                 .bold()
                 .font(.title3)
                 .multilineTextAlignment(.center)
@@ -459,13 +451,14 @@ extension MainView {
         .padding([.top, .horizontal])
     }
     
-    private var NoResultView: some View {
+    private func NoBannerView<Content: View>(messageView: @escaping () -> Content) -> some View {
         HStack(alignment: .center){
             NoResultImage
             
             Spacer(minLength: 0)
                 .background(.gray)
-            NoResultMessage
+            
+            messageView()
         }
         .padding()
         .background(
@@ -475,20 +468,22 @@ extension MainView {
         .padding([.top, .horizontal])
     }
     
-    private var NoFavoritesView: some View {
-        HStack(alignment: .center){
-            NoResultImage
-            
-            Spacer(minLength: 0)
-                .background(.gray)
-            NoFavoritesMessage
+    private var NoResultView: some View {
+        NoBannerView {
+            NoBannerMessage("Not Found in this filters!")
         }
-        .padding()
-        .background(
-            RoundedRectangle(cornerRadius: 16)
-                .fill(Color(UIColor.secondarySystemBackground))
-        )
-        .padding([.top, .horizontal])
+    }
+    
+    private var NoFavoritesView: some View {
+        NoBannerView {
+            NoBannerMessage("No favorites in this filters!")
+        }
+    }
+    
+    private var NoInternetView: some View {
+        NoBannerView {
+            NoBannerMessage("No intenet connection !")
+        }
     }
 }
 
@@ -523,8 +518,6 @@ extension MainView {
     
     private var FavoritesButton: some View {
         Button {
-            //TODO: network check
-            //guard networkMonitor.isConnected else { return }
             vm.showingOnlyFavorites.toggle()
         } label: {
             Image(systemName: vm.showingOnlyFavorites ? "heart.fill" : "heart")

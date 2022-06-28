@@ -3,6 +3,8 @@ This app was developed by Can Bi. It uses SwiftUI and is written 100% in Swift. 
 
 ### Movie API
 The app uses [OMDb API](http://omdbapi.com/). 
+The Open Movie Database
+The OMDb API is a RESTful web service to obtain movie information, all content and images on the site are contributed and maintained by our users.
 
 ### Implemented Features
 - [x]  Data Structure
@@ -14,7 +16,9 @@ The app uses [OMDb API](http://omdbapi.com/).
 - [x]  Settings page
 - [x]  Theme color settings
 - [x]  Filtering
+- [x]  Paging
 - [x]  Favorites
+- [x]  Filtering for favorites
 - [x]  Offline usage capability with CoreData and Directory File
-- []  Offline UI State
+- [x]  Offline UI State
 - []  App icon and Launch Screen
