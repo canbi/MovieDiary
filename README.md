@@ -21,4 +21,9 @@ The OMDb API is a RESTful web service to obtain movie information, all content a
 - [x]  Filtering for favorites
 - [x]  Offline usage capability with CoreData and Directory File
 - [x]  Offline UI State
-- []  App icon and Launch Screen
+- [x]  App icon and Launch Screen
+
+### Dark UI Screenshots
+<img src="Screenshots/dark-1.png" width="200"/><img src="Screenshots/dark-2.png" width="200"/><img src="Screenshots/dark-3.png" width="200"/> <img src="Screenshots/dark-4.png" width="200"/><img src="Screenshots/dark-5.png" width="200"/><img src="Screenshots/dark-6.png" width="200"/><img src="Screenshots/dark-7.png" width="200"/><img src="Screenshots/dark-8.png" width="200"/><img src="Screenshots/dark-9.png" width="200"/><img src="Screenshots/dark-10.png" width="200"/><img src="Screenshots/dark-11.png" width="200"/> 
+### Light UI Screenshots
+<img src="Screenshots/light-1.png" width="200"/><img src="Screenshots/light-2.png" width="200"/><img src="Screenshots/light-3.png" width="200"/><img src="Screenshots/light-4.png" width="200"/><img src="Screenshots/light-5.png" width="200"/><img src="Screenshots/light-6.png" width="200"/><img src="Screenshots/light-7.png" width="200"/><img src="Screenshots/light-8.png" width="200"/><img src="Screenshots/light-9.png" width="200"/><img src="Screenshots/light-10.png" width="200"/><img src="Screenshots/light-11.png" width="200"/>

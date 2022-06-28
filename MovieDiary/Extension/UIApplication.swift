@@ -28,7 +28,7 @@ extension UIApplication {
 // MARK: - Source
 // https://blckbirds.com/post/how-to-create-a-search-bar-with-swiftui/
 extension UIApplication {
-     func dismissKeyboard() {
-         sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
-     }
- }
+    func dismissKeyboard() {
+        sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}

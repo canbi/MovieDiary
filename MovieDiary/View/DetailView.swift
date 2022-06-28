@@ -43,7 +43,7 @@ struct DetailView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 BackButton(color: settingManager.theme.mainColor) { dismiss() }
-                .padding(.leading, -24)
+                    .padding(.leading, -24)
             }
         }
     }
@@ -92,7 +92,7 @@ extension DetailView {
                 LocalInfoOfflineView
             }
             .padding(.horizontal)
-
+            
             Spacer()
         }
     }
@@ -131,7 +131,7 @@ extension DetailView {
         }
         .padding(.horizontal)
     }
-     
+    
     
     private var GenreOfflineView: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -233,28 +233,28 @@ extension DetailView {
     }
     
     private var ProductionOfflineView: some View {
-           Group {
-               if let production = vm.cdMovie!.production {
-                   Text("Production")
-                       .bold()
-                   Text(production)
-                       .foregroundColor(.secondary)
-                   Spacer().frame(height: 10)
-               }
-           }
-       }
-       
-       private var WebsiteOfflineView: some View {
-           Group {
-               if let website = vm.cdMovie!.website {
-                   Text("Website")
-                       .bold()
-                   Text(website)
-                       .foregroundColor(.secondary)
-                   Spacer().frame(height: 10)
-               }
-           }
-       }
+        Group {
+            if let production = vm.cdMovie!.production {
+                Text("Production")
+                    .bold()
+                Text(production)
+                    .foregroundColor(.secondary)
+                Spacer().frame(height: 10)
+            }
+        }
+    }
+    
+    private var WebsiteOfflineView: some View {
+        Group {
+            if let website = vm.cdMovie!.website {
+                Text("Website")
+                    .bold()
+                Text(website)
+                    .foregroundColor(.secondary)
+                Spacer().frame(height: 10)
+            }
+        }
+    }
     
     private var RatingOfflineView: some View {
         VStack(alignment: .leading, spacing: 5) {
@@ -270,9 +270,9 @@ extension DetailView {
             if let score = vm.cdMovie!.metacriticScore {
                 HStack {
                     Image("Metacritic")
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 18)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(height: 18)
                     Text(score)
                 }
             }
@@ -309,7 +309,7 @@ extension DetailView {
                 }
             }
             .padding(.vertical)
-
+            
             Group {
                 Divider()
                     .padding(.top, 8)
@@ -334,7 +334,7 @@ extension DetailView {
                 LocalInfoView
             }
             .padding(.horizontal)
-
+            
             Spacer()
         }
         .redacted(reason: vm.movieInfo == nil ? .placeholder : [])
@@ -512,9 +512,9 @@ extension DetailView {
                 if let score = movieInfo.metacriticScore {
                     HStack {
                         Image("Metacritic")
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 18)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 18)
                         Text(score)
                     }
                 }
@@ -556,8 +556,8 @@ struct DetailView_Previews: PreviewProvider {
             DetailView(movie: Search.previewData, mainVM: MainViewModel())
             DetailView(movie: Search.previewData, mainVM: MainViewModel()).preferredColorScheme(.dark)
         }
-            .environmentObject(SettingManager.previewInstance)
-            .environmentObject(JSONDataService.previewInstance)
-            .environmentObject(CoreDataDataService(moc: CoreDataController().container.viewContext))
+        .environmentObject(SettingManager.previewInstance)
+        .environmentObject(JSONDataService.previewInstance)
+        .environmentObject(CoreDataDataService(moc: CoreDataController().container.viewContext))
     }
 }

@@ -13,7 +13,7 @@ struct SearchResult: Codable {
     let totalResults: String?
     let response: String
     let error: String?
-
+    
     enum CodingKeys: String, CodingKey {
         case search = "Search"
         case totalResults
@@ -27,7 +27,7 @@ struct Search: Codable {
     let title, year, imdbID: String
     let type: SearchType
     let poster: String
-
+    
     enum CodingKeys: String, CodingKey {
         case title = "Title"
         case year = "Year"

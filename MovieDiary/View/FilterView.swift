@@ -79,7 +79,7 @@ extension FilterView {
     }
     
     private var SearchYearSection: some View {
-        Section(header: Text("Date Filter".uppercased())) {
+        Section(header: Text("Year Filter".uppercased())) {
             Picker("", selection: $vm.selectedSearchYear) {
                 Text("Default").tag(nil as Int?)
                 ForEach((1888...Calendar.current.component(.year, from: Date())).reversed(), id: \.self) { year in
@@ -96,40 +96,6 @@ extension FilterView {
             }
         }
     }
-    
-    
-    /*
-    private var DateSection: some View {
-        Section(header: Text("Date Filter".uppercased())) {
-            VStack(alignment: .leading) {
-                Picker("", selection: $vm.selectedDateType) {
-                    ForEach(DateType.allCases) { type in
-                        Text(type.rawValue)
-                    }
-                }
-                .labelsHidden()
-                .pickerStyle(.segmented)
-                
-                Spacer().frame(height: 15)
-                
-                HStack {
-                    if vm.selectedDateType == .sol {
-                        Slider(value: IntDoubleBinding($vm.martianSol).doubleValue, in: 0...Double(vm.maximumSol), step: 1.0)
-                        Text(String(vm.martianSol) + " Sol")
-                            .padding(8)
-                            .background(Color(UIColor.tertiarySystemBackground))
-                            .cornerRadius(12)
-                    }
-                    else {
-                        Text("Select a date")
-                        DatePicker(selection: $vm.earthDate, in: vm.startingDate...vm.lastDate, displayedComponents: .date){}
-                        
-                    }
-                }
-            }
-            .padding(.vertical)
-        }
-    }*/
 }
 
 struct FilterView_Previews: PreviewProvider {

@@ -12,7 +12,7 @@ struct Endpoint {
     var queryItems: [URLQueryItem]
     
     static let apiKey = "ae9335fd"
-
+    
     var url: URL? {
         var components = URLComponents()
         components.scheme = "https"

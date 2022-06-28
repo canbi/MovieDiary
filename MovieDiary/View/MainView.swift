@@ -29,15 +29,7 @@ struct MainView: View {
                 ScrollView {
                     LazyVStack(alignment: .leading, spacing: 0, pinnedViews: .sectionHeaders) {
                         Section(header: GridHeader, footer: GridFooter) {
-                            if vm.noInternetBannerState {
-                                NoInternetView
-                            } else if vm.initialState {
-                                NoSearchView
-                            } else if vm.notFoundState {
-                                NoResultView
-                            } else if vm.noFavoritesState {
-                                NoFavoritesView
-                            }
+                            StateBannerView
                             
                             LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
                                       alignment: .leading,
@@ -95,7 +87,7 @@ struct MainView: View {
 extension MainView {
     private var GridHeader: some View {
         VStack(spacing: 0) {
-            HStack(alignment: .top, spacing: 0) {
+            HStack(alignment: .center, spacing: 0) {
                 VStack(alignment:.leading, spacing: 0) {
                     Text("Movie Diary")
                         .font(.largeTitle.bold())
@@ -174,6 +166,20 @@ extension MainView {
 
 // MARK: - Movie Main Views
 extension MainView {
+    private var StateBannerView: some View {
+        Group {
+            if vm.noInternetBannerState {
+                NoInternetView
+            } else if vm.initialState {
+                NoSearchView
+            } else if vm.notFoundState {
+                NoResultView
+            } else if vm.noFavoritesState {
+                NoFavoritesView
+            }
+        }
+    }
+    
     private var OnlineMoviesView: some View {
         ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
             MovieCell(result)
@@ -279,40 +285,47 @@ extension MainView {
                      alignment: .topTrailing)
     }
     
+    private func OneColumnOfflineCell(_ movie: CDMovie) -> some View {
+        HStack(alignment: .top){
+            OfflineCellImage(movie)
+            
+            Spacer().frame(width: 10)
+            
+            VStack(alignment: .leading ){
+                Text(movie.title ?? "")
+                    .bold()
+                    .font(.title3)
+                
+                LabelCapsule(text: movie.type?.capitalized ?? "")
+                LabelCapsule(text: movie.year ?? "")
+                
+                Spacer()
+            }
+        }
+    }
+    
+    private func TwoColumnOfflineCell(_ movie: CDMovie) -> some View {
+        VStack(alignment: .leading){
+            OfflineCellImage(movie)
+            
+            Text(movie.title ?? "" + "\n\n")
+                .lineLimit(3)
+                .font(.caption.bold())
+            
+            Group {
+                LabelCapsule(text: movie.type?.capitalized ?? "")
+                LabelCapsule(text: movie.year ?? "")
+            }
+        }
+    }
+    
     
     private func MovieOfflineCell(_ movie: CDMovie) -> some View {
         Group {
             if settingManager.gridDesign == .oneColumn {
-                HStack(alignment: .top){
-                    OfflineCellImage(movie)
-                    
-                    Spacer().frame(width: 10)
-                    
-                    VStack(alignment: .leading ){
-                        Text(movie.title ?? "")
-                            .bold()
-                            .font(.title3)
-                        
-                        LabelCapsule(text: movie.type?.capitalized ?? "")
-                        LabelCapsule(text: movie.year ?? "")
-                        
-                        Spacer()
-                    }
-                }
+                OneColumnOfflineCell(movie)
             } else {
-                
-                VStack(alignment: .leading){
-                    OfflineCellImage(movie)
-                    
-                    Text(movie.title ?? "" + "\n\n")
-                        .lineLimit(3)
-                        .font(.caption.bold())
-                    
-                    Group {
-                        LabelCapsule(text: movie.type?.capitalized ?? "")
-                        LabelCapsule(text: movie.year ?? "")
-                    }
-                }
+                TwoColumnOfflineCell(movie)
             }
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -321,9 +334,7 @@ extension MainView {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.secondarySystemBackground))
         )
-        .onTapGesture {
-            vm.selectedOfflineMovie = movie
-        }
+        .onTapGesture { vm.selectedOfflineMovie = movie }
         .padding(.top)
         .padding(.leading)
     }
@@ -342,37 +353,45 @@ extension MainView {
                      alignment: .topTrailing)
     }
     
+    private func OneColumnCell(_ movie: Search) -> some View {
+        HStack(alignment: .top){
+            MovieCellImage(movie)
+            
+            Spacer().frame(width: 10)
+            
+            VStack(alignment: .leading ){
+                Text(movie.title)
+                    .bold()
+                    .font(.title3)
+                
+                LabelCapsule(text: movie.type.name)
+                LabelCapsule(text: movie.year)
+                Spacer()
+            }
+        }
+    }
+    
+    private func TwoColumnCell(_ movie: Search) -> some View {
+        VStack(alignment: .leading){
+            MovieCellImage(movie)
+            
+            Text(movie.title + "\n\n")
+                .lineLimit(3)
+                .font(.caption.bold())
+            
+            Group {
+                LabelCapsule(text: movie.type.name)
+                LabelCapsule(text: movie.year)
+            }
+        }
+    }
+    
     private func MovieCell(_ movie: Search) -> some View {
         Group {
             if settingManager.gridDesign == .oneColumn {
-                HStack(alignment: .top){
-                    MovieCellImage(movie)
-                    
-                    Spacer().frame(width: 10)
-                    
-                    VStack(alignment: .leading ){
-                        Text(movie.title)
-                            .bold()
-                            .font(.title3)
-                        
-                        LabelCapsule(text: movie.type.name)
-                        LabelCapsule(text: movie.year)
-                        Spacer()
-                    }
-                }
+                OneColumnCell(movie)
             } else {
-                VStack(alignment: .leading){
-                    MovieCellImage(movie)
-                    
-                    Text(movie.title + "\n\n")
-                        .lineLimit(3)
-                        .font(.caption.bold())
-                    
-                    Group {
-                        LabelCapsule(text: movie.type.name)
-                        LabelCapsule(text: movie.year)
-                    }
-                }
+                TwoColumnCell(movie)
             }
         }
         .frame(maxWidth: .infinity, alignment: .topLeading)
@@ -381,9 +400,7 @@ extension MainView {
             RoundedRectangle(cornerRadius: 16)
                 .fill(Color(UIColor.secondarySystemBackground))
         )
-        .onTapGesture {
-            vm.selectedMovie = movie
-        }
+        .onTapGesture { vm.selectedMovie = movie }
         .padding(.top)
         .padding(.leading)
     }

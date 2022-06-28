@@ -112,6 +112,7 @@
 		362361462869737500E73456 = {
 			isa = PBXGroup;
 			children = (
+				3649FA03286AFFB600E62D42 /* Screenshots */,
 				362361602869739400E73456 /* README.md */,
 				362361512869737500E73456 /* MovieDiary */,
 				362361502869737500E73456 /* Products */,
@@ -277,6 +278,13 @@
 				3623618F28699CE700E73456 /* SearchBar.swift */,
 			);
 			path = SearchBar;
+			sourceTree = "<group>";
+		};
+		3649FA03286AFFB600E62D42 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
