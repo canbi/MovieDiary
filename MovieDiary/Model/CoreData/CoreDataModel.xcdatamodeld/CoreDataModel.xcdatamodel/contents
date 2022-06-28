@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E258" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CDMovie" representedClassName="CDMovie" syncable="YES">
+        <attribute name="actors" optional="YES" attributeType="String"/>
+        <attribute name="addFavoritesDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="awards" optional="YES" attributeType="String"/>
+        <attribute name="boxOffice" optional="YES" attributeType="String"/>
+        <attribute name="country" optional="YES" attributeType="String"/>
+        <attribute name="director" optional="YES" attributeType="String"/>
+        <attribute name="dvd" optional="YES" attributeType="String"/>
+        <attribute name="genre" optional="YES" attributeType="String"/>
+        <attribute name="imdbId" optional="YES" attributeType="String"/>
+        <attribute name="imdbRating" optional="YES" attributeType="String"/>
+        <attribute name="imdbVotes" optional="YES" attributeType="String"/>
+        <attribute name="language" optional="YES" attributeType="String"/>
+        <attribute name="metacriticScore" optional="YES" attributeType="String"/>
+        <attribute name="plot" optional="YES" attributeType="String"/>
+        <attribute name="poster" optional="YES" attributeType="String"/>
+        <attribute name="production" optional="YES" attributeType="String"/>
+        <attribute name="rated" optional="YES" attributeType="String"/>
+        <attribute name="released" optional="YES" attributeType="String"/>
+        <attribute name="rottenScore" optional="YES" attributeType="String"/>
+        <attribute name="runtime" optional="YES" attributeType="String"/>
+        <attribute name="title" optional="YES" attributeType="String"/>
+        <attribute name="totalSeasons" optional="YES" attributeType="String"/>
+        <attribute name="type" optional="YES" attributeType="String"/>
+        <attribute name="website" optional="YES" attributeType="String"/>
+        <attribute name="writer" optional="YES" attributeType="String"/>
+        <attribute name="year" optional="YES" attributeType="String"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="imdbId"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <elements>
+        <element name="CDMovie" positionX="-63" positionY="-18" width="128" height="14"/>
+    </elements>
+</model>

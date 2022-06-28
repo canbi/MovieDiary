@@ -11,12 +11,14 @@ import SwiftUI
 struct MovieDiaryApp: App {
     let dataService: JSONDataService = JSONDataService()
     let settingManager: SettingManager = SettingManager()
+    @StateObject private var cdDataService = CoreDataDataService(moc: CoreDataController().container.viewContext)
     
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(dataService)
                 .environmentObject(settingManager)
+                .environmentObject(cdDataService)
         }
     }
 }

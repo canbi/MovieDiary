@@ -10,54 +10,27 @@ import SwiftUI
 struct DetailView: View {
     @EnvironmentObject var settingManager: SettingManager
     @EnvironmentObject var dataService: JSONDataService
+    @EnvironmentObject var coreDataService: CoreDataDataService
     @Environment(\.dismiss) var dismiss
     @StateObject var vm: DetailViewModel
     
-    init(_ movie: Search){
-        self._vm = StateObject(wrappedValue: DetailViewModel(movie: movie))
+    init(movie: Search? = nil, cdMovie: CDMovie? = nil, mainVM: MainViewModel){
+        self._vm = StateObject(wrappedValue: DetailViewModel(movie: movie,
+                                                             cdMovie: cdMovie,
+                                                             mainVM: mainVM))
     }
     
     var body: some View {
         ScrollView(showsIndicators: false) {
-            VStack(alignment: .leading, spacing: 0) {
-                HStack(alignment: .bottom, spacing: 0) {
-                    CoverView
-                    
-                    VStack(alignment: .leading) {
-                        MainInfoView
-                        GenreView
-                        Spacer(minLength: 8)
-                        
-                        RatingView
-                    }
-                }
-                .padding(.vertical)
-
-                Group {
-                    Divider()
-                        .padding(.top, 8)
-                        .padding(.bottom, 12)
-                    
-                    PlotView
-                    
-                    CastView
-                    
-                    DirectorView
-                    
-                    WriterView
-                    
-                    BoxOfficeView
-                    
-                    LocalInfoView
-                }
-                .padding(.horizontal)
-
-                Spacer()
+            if let _ = vm.movie {
+                OnlineInformationView
             }
-            .redacted(reason: vm.movieInfo == nil ? .placeholder : [])
-            .onAppear{ vm.setup(dataService: dataService) }
-            .onDisappear{ dataService.movieInfo = nil }
+            else {
+                Text("offline view")
+            }
         }
+        .onAppear{ vm.setup(dataService: dataService, coreDataService: coreDataService) }
+        .onDisappear{ dataService.movieInfo = nil }
         .sheet(isPresented: $vm.showingZoomImageView, content: {
             ImageZoomView(image: vm.clickedImage!, tintColor: settingManager.theme.mainColor)
         })
@@ -74,20 +47,55 @@ struct DetailView: View {
     }
 }
 
+// MARK: Online Info Views
 extension DetailView {
+    private var OnlineInformationView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(alignment: .bottom, spacing: 0) {
+                CoverView
+                
+                VStack(alignment: .leading) {
+                    MainInfoView
+                    GenreView
+                    Spacer(minLength: 8)
+                    
+                    RatingView
+                }
+            }
+            .padding(.vertical)
+
+            Group {
+                Divider()
+                    .padding(.top, 8)
+                    .padding(.bottom, 12)
+                
+                PlotView
+                
+                CastView
+                
+                DirectorView
+                
+                WriterView
+                
+                BoxOfficeView
+                
+                LocalInfoView
+            }
+            .padding(.horizontal)
+
+            Spacer()
+        }
+        .redacted(reason: vm.movieInfo == nil ? .placeholder : [])
+    }
+    
     private var CoverView: some View {
         Group {
             if let movie = vm.movie {
                 ImageView(photo: movie)
                     .frame(width: 150)
                     .padding(.leading)
-                    .overlay(
-                        ZoomButton(action: {
-                            vm.clickedImage = vm.getImage()
-                            vm.showingZoomImageView = true
-                        }
-                    ),
-                        alignment: .bottomTrailing)
+                    .overlay(ZoomButton(action: vm.zoomImage), alignment: .bottomTrailing)
+                    .overlay(FavoritesButton, alignment: .topTrailing)
             }
         }
     }
@@ -236,11 +244,25 @@ extension DetailView {
     }
 }
 
+// MARK: Buttons
+extension DetailView {
+    private var FavoritesButton: some View {
+        Button{
+            vm.favoriteButton {dismiss()}
+        } label: {
+            Image(systemName: vm.isFavorited ? "heart.fill" : "heart")
+                .font(.system(size: 30))
+                .foregroundColor(vm.isFavorited ? settingManager.theme.mainColor : .white)
+        }
+        .padding([.top, .trailing])
+    }
+}
+
 struct DetailView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            DetailView(Search.previewData)
-            DetailView(Search.previewData).preferredColorScheme(.dark)
+            DetailView(movie: Search.previewData, mainVM: MainViewModel())
+            DetailView(movie: Search.previewData, mainVM: MainViewModel()).preferredColorScheme(.dark)
         }
             .environmentObject(SettingManager.previewInstance)
             .environmentObject(JSONDataService.previewInstance)

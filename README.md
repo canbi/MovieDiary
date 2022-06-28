@@ -14,8 +14,7 @@ The app uses [OMDb API](http://omdbapi.com/).
 - [x]  Settings page
 - [x]  Theme color settings
 - [x]  Filtering
-- []  Share button and Share Sheet
-- []  Favorites
-- []  Offline usage capability with CoreData and Directory File
+- [x]  Favorites
+- [x]  Offline usage capability with CoreData and Directory File
 - []  Offline UI State
 - []  App icon and Launch Screen

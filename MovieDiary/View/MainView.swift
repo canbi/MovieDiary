@@ -11,6 +11,8 @@ struct MainView: View {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @EnvironmentObject var settingManager: SettingManager
     @EnvironmentObject var dataService: JSONDataService
+    @EnvironmentObject var coreDataService: CoreDataDataService
+    @ObservedObject var networkMonitor: NetworkMonitor = NetworkMonitor()
     @StateObject var vm: MainViewModel = MainViewModel()
     
     let oneColumns = [GridItem(.flexible(maximum: .infinity))]
@@ -31,6 +33,8 @@ struct MainView: View {
                                 NoSearchView
                             } else if vm.notFoundState {
                                 NoResultView
+                            } else if vm.noFavoritesState {
+                                NoFavoritesView
                             }
                             
                             LazyVGrid(columns: settingManager.gridDesign == .oneColumn ? oneColumns : twoColumns,
@@ -38,12 +42,13 @@ struct MainView: View {
                                       spacing: 0,
                                       pinnedViews: .sectionHeaders) {
                                 
-                                ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
-                                    MovieCell(result)
-                                        .redacted(reason: vm.isPageLoading ? .placeholder : [])
+                                if vm.showingOnlyFavorites {
+                                    OfflineMoviesView
+                                } else {
+                                    OnlineMoviesView
                                 }
                                 
-                                if vm.justStartedSearchingState {
+                                if vm.showDummyCellsState {
                                     Group{
                                         DummyCell
                                         DummyCell
@@ -58,7 +63,9 @@ struct MainView: View {
                     }
                 }
                 .onAppear{
-                    vm.setup(dataService: dataService)
+                    vm.setup(dataService: dataService,
+                             cdDataService: coreDataService,
+                             networkMonitor: networkMonitor)
                     vm.scrollViewProxy = reader
                 }
                 .sheet(isPresented: $vm.showingFilterViewSheet) {
@@ -66,7 +73,10 @@ struct MainView: View {
                 }
             }
             .navigationDestination(for: $vm.selectedMovie) { movie in
-                DetailView(movie)
+                DetailView(movie: movie, mainVM: vm)
+            }
+            .navigationDestination(for: $vm.selectedOfflineMovie) { movie in
+                DetailView(cdMovie: movie, mainVM: vm)
             }
             .ignoresSafeArea(.container, edges: .top)
             .navigationBarHidden(true)
@@ -107,14 +117,19 @@ extension MainView {
     }
     
     private var FilterSummary: some View {
-        HStack(alignment: .top){
-            Text("\(vm.searchType.name),")
+        HStack(alignment: .top, spacing: 0){
+            Text("\(vm.searchType.name), ")
             if let year = vm.searchYear {
                 Text(String(year))
             }
             else {
                 Text("All")
             }
+            
+            if vm.showingOnlyFavorites {
+                Text(", in Favorites")
+            }
+            
             Spacer()
         }
         .font(.caption)
@@ -122,7 +137,7 @@ extension MainView {
     
     private var GridFooter: some View {
         Group {
-            if vm.searchResults != nil && !(vm.searchResults?.search?.isEmpty ?? true) {
+            if vm.showPageNumberState {
                 ScrollView(.horizontal, showsIndicators: false){
                     HStack(spacing: 0){
                         ForEach(1...vm.maxPageNumber, id: \.self) { number in
@@ -155,6 +170,21 @@ extension MainView {
     }
 }
 
+// MARK: - Movie Main Views
+extension MainView {
+    private var OnlineMoviesView: some View {
+        ForEach(vm.searchResults?.search ?? [], id:\.imdbID) { result in
+            MovieCell(result)
+                .redacted(reason: vm.isPageLoading ? .placeholder : [])
+        }
+    }
+    
+    private var OfflineMoviesView: some View {
+        ForEach(vm.filteredFavoriteMovies, id:\.wrappedId) { result in
+            MovieOfflineCell(result)
+        }
+    }
+}
 
 // MARK: - Dummy Redacted Views
 extension MainView {
@@ -235,15 +265,89 @@ extension MainView {
     }
 }
 
+// MARK: - Offline Cell
+extension MainView {
+    private func OfflineCellImage(_ movie: CDMovie) -> some View {
+        ImageOfflineView(movie: movie)
+            .frame(width: 140, height: 200)
+            .overlay(Image(systemName: "heart.fill")
+                .foregroundColor(settingManager.theme.mainColor)
+                .imageScale(settingManager.gridDesign == .oneColumn ? .large : .medium)
+                .padding([.top,.trailing], 6),
+                     alignment: .topTrailing)
+    }
+    
+    
+    private func MovieOfflineCell(_ movie: CDMovie) -> some View {
+        Group {
+            if settingManager.gridDesign == .oneColumn {
+                HStack(alignment: .top){
+                    OfflineCellImage(movie)
+                    
+                    Spacer().frame(width: 10)
+                    
+                    VStack(alignment: .leading ){
+                        Text(movie.title ?? "")
+                            .bold()
+                            .font(.title3)
+                        
+                        LabelCapsule(text: movie.type?.capitalized ?? "")
+                        LabelCapsule(text: movie.year ?? "")
+                        
+                        Spacer()
+                    }
+                }
+            } else {
+                
+                VStack(alignment: .leading){
+                    OfflineCellImage(movie)
+                    
+                    Text(movie.title ?? "" + "\n\n")
+                        .lineLimit(3)
+                        .font(.caption.bold())
+                    
+                    Group {
+                        LabelCapsule(text: movie.type?.capitalized ?? "")
+                        LabelCapsule(text: movie.year ?? "")
+                    }
+                }
+            }
+        }
+        .frame(maxWidth: .infinity, alignment: .topLeading)
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(UIColor.secondarySystemBackground))
+        )
+        .onTapGesture {
+            vm.selectedOfflineMovie = movie
+        }
+        .padding(.top)
+        .padding(.leading)
+    }
+}
+
 // MARK: - Cell
 extension MainView {
+    private func MovieCellImage(_ movie: Search) -> some View {
+        ImageView(photo: movie)
+            .frame(width: 140, height: 200)
+            .overlay(Image(systemName: "heart.fill")
+                .foregroundColor(settingManager.theme.mainColor)
+                .imageScale(settingManager.gridDesign == .oneColumn ? .large : .medium)
+                .opacity(coreDataService.isFavorited(imdbId: movie.imdbID) ? 1 : 0)
+                .padding([.top,.trailing], 6),
+                     alignment: .topTrailing)
+    }
+    
     private func MovieCell(_ movie: Search) -> some View {
         Group {
             if settingManager.gridDesign == .oneColumn {
                 HStack(alignment: .top){
-                    ImageView(photo: movie)
-                        .frame(width: 140, height: 200)
+                    MovieCellImage(movie)
+                    
                     Spacer().frame(width: 10)
+                    
                     VStack(alignment: .leading ){
                         Text(movie.title)
                             .bold()
@@ -256,8 +360,7 @@ extension MainView {
                 }
             } else {
                 VStack(alignment: .leading){
-                    ImageView(photo: movie)
-                        .frame(width: 140, height: 200)
+                    MovieCellImage(movie)
                     
                     Text(movie.title + "\n\n")
                         .lineLimit(3)
@@ -322,7 +425,17 @@ extension MainView {
     
     private var NoResultMessage: some View {
         VStack(alignment: .trailing, spacing: 0){
-            Text("Not Found!")
+            Text("Not Found in this filters!")
+                .bold()
+                .font(.title3)
+                .multilineTextAlignment(.center)
+        }
+        .padding(.trailing)
+    }
+    
+    private var NoFavoritesMessage: some View {
+        VStack(alignment: .trailing, spacing: 0){
+            Text("No favorites in this filters!")
                 .bold()
                 .font(.title3)
                 .multilineTextAlignment(.center)
@@ -353,6 +466,22 @@ extension MainView {
             Spacer(minLength: 0)
                 .background(.gray)
             NoResultMessage
+        }
+        .padding()
+        .background(
+            RoundedRectangle(cornerRadius: 16)
+                .fill(Color(UIColor.secondarySystemBackground))
+        )
+        .padding([.top, .horizontal])
+    }
+    
+    private var NoFavoritesView: some View {
+        HStack(alignment: .center){
+            NoResultImage
+            
+            Spacer(minLength: 0)
+                .background(.gray)
+            NoFavoritesMessage
         }
         .padding()
         .background(

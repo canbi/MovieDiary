@@ -38,6 +38,14 @@
 		3623619B2869AD1E00E73456 /* BackButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 362361992869AD1E00E73456 /* BackButton.swift */; };
 		3623619D2869B18800E73456 /* Navigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623619C2869B18800E73456 /* Navigation.swift */; };
 		3623619F2869B19400E73456 /* Binding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3623619E2869B19400E73456 /* Binding.swift */; };
+		3649F9F0286AC61300E62D42 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9EE286AC61300E62D42 /* CoreDataModel.xcdatamodeld */; };
+		3649F9F3286AC78900E62D42 /* CDMovie+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F1286AC78900E62D42 /* CDMovie+CoreDataClass.swift */; };
+		3649F9F4286AC78900E62D42 /* CDMovie+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F2286AC78900E62D42 /* CDMovie+CoreDataProperties.swift */; };
+		3649F9F6286AC7F100E62D42 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F5286AC7F100E62D42 /* CoreDataService.swift */; };
+		3649F9F8286AD3ED00E62D42 /* CoreDataController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F7286AD3ED00E62D42 /* CoreDataController.swift */; };
+		3649F9FA286AD4EF00E62D42 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9F9286AD4EF00E62D42 /* NetworkMonitor.swift */; };
+		3649F9FC286ADB9400E62D42 /* ImageOfflineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9FB286ADB9400E62D42 /* ImageOfflineView.swift */; };
+		3649F9FE286ADB9900E62D42 /* ImageOfflineViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3649F9FD286ADB9900E62D42 /* ImageOfflineViewModel.swift */; };
 		36D688F42869D9630089B189 /* ZoomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F32869D9630089B189 /* ZoomButton.swift */; };
 		36D688F62869D9EA0089B189 /* ImageZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 36D688F52869D9EA0089B189 /* ImageZoomView.swift */; };
 /* End PBXBuildFile section */
@@ -76,6 +84,14 @@
 		362361992869AD1E00E73456 /* BackButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackButton.swift; sourceTree = "<group>"; };
 		3623619C2869B18800E73456 /* Navigation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Navigation.swift; sourceTree = "<group>"; };
 		3623619E2869B19400E73456 /* Binding.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Binding.swift; sourceTree = "<group>"; };
+		3649F9EF286AC61300E62D42 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
+		3649F9F1286AC78900E62D42 /* CDMovie+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDMovie+CoreDataClass.swift"; sourceTree = "<group>"; };
+		3649F9F2286AC78900E62D42 /* CDMovie+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CDMovie+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		3649F9F5286AC7F100E62D42 /* CoreDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		3649F9F7286AD3ED00E62D42 /* CoreDataController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataController.swift; sourceTree = "<group>"; };
+		3649F9F9286AD4EF00E62D42 /* NetworkMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
+		3649F9FB286ADB9400E62D42 /* ImageOfflineView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOfflineView.swift; sourceTree = "<group>"; };
+		3649F9FD286ADB9900E62D42 /* ImageOfflineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageOfflineViewModel.swift; sourceTree = "<group>"; };
 		36D688F32869D9630089B189 /* ZoomButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomButton.swift; sourceTree = "<group>"; };
 		36D688F52869D9EA0089B189 /* ImageZoomView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageZoomView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -139,7 +155,9 @@
 			children = (
 				3623616E2869759400E73456 /* LocalFileManager.swift */,
 				362361702869759A00E73456 /* NetworkingManager.swift */,
+				3649F9F7286AD3ED00E62D42 /* CoreDataController.swift */,
 				3623616C2869751B00E73456 /* SettingManager.swift */,
+				3649F9F9286AD4EF00E62D42 /* NetworkMonitor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -150,6 +168,7 @@
 				362361742869797400E73456 /* JSONDataService.swift */,
 				36236180286985FE00E73456 /* ImageDataService.swift */,
 				36236172286975AC00E73456 /* Endpoint.swift */,
+				3649F9F5286AC7F100E62D42 /* CoreDataService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -157,6 +176,7 @@
 		362361642869741C00E73456 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3649F9ED286AC60700E62D42 /* CoreData */,
 				36236169286974D400E73456 /* Enums */,
 				3623617628697ACD00E73456 /* SearchResult.swift */,
 				362361782869803500E73456 /* MovieResult.swift */,
@@ -173,6 +193,7 @@
 				3623618628698C9D00E73456 /* DetailView.swift */,
 				362361932869AC1600E73456 /* SettingsView.swift */,
 				360382FC286A29C400B9488C /* FilterView.swift */,
+				3649F9FB286ADB9400E62D42 /* ImageOfflineView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -185,6 +206,7 @@
 				3623618828698CA600E73456 /* DetailViewModel.swift */,
 				362361952869AC2000E73456 /* SettingsViewModel.swift */,
 				360382FE286A29CC00B9488C /* FilterViewModel.swift */,
+				3649F9FD286ADB9900E62D42 /* ImageOfflineViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -226,6 +248,16 @@
 				362361992869AD1E00E73456 /* BackButton.swift */,
 			);
 			path = CustomButtons;
+			sourceTree = "<group>";
+		};
+		3649F9ED286AC60700E62D42 /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				3649F9EE286AC61300E62D42 /* CoreDataModel.xcdatamodeld */,
+				3649F9F1286AC78900E62D42 /* CDMovie+CoreDataClass.swift */,
+				3649F9F2286AC78900E62D42 /* CDMovie+CoreDataProperties.swift */,
+			);
+			path = CoreData;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -299,9 +331,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3649F9F6286AC7F100E62D42 /* CoreDataService.swift in Sources */,
 				3623618928698CA600E73456 /* DetailViewModel.swift in Sources */,
+				3649F9F3286AC78900E62D42 /* CDMovie+CoreDataClass.swift in Sources */,
 				362361962869AC2000E73456 /* SettingsViewModel.swift in Sources */,
 				36236181286985FE00E73456 /* ImageDataService.swift in Sources */,
+				3649F9FC286ADB9400E62D42 /* ImageOfflineView.swift in Sources */,
 				36236173286975AC00E73456 /* Endpoint.swift in Sources */,
 				3623619F2869B19400E73456 /* Binding.swift in Sources */,
 				36D688F62869D9EA0089B189 /* ImageZoomView.swift in Sources */,
@@ -314,6 +349,8 @@
 				3623616D2869751B00E73456 /* SettingManager.swift in Sources */,
 				36236185286986B800E73456 /* ImageViewModel.swift in Sources */,
 				3623618E28699CC300E73456 /* UIApplication.swift in Sources */,
+				3649F9FE286ADB9900E62D42 /* ImageOfflineViewModel.swift in Sources */,
+				3649F9F8286AD3ED00E62D42 /* CoreDataController.swift in Sources */,
 				3623617F286982FA00E73456 /* MainViewModel.swift in Sources */,
 				362361792869803500E73456 /* MovieResult.swift in Sources */,
 				3623618728698C9D00E73456 /* DetailView.swift in Sources */,
@@ -321,10 +358,13 @@
 				3623616F2869759400E73456 /* LocalFileManager.swift in Sources */,
 				362361922869A16400E73456 /* GridDesign.swift in Sources */,
 				362361712869759A00E73456 /* NetworkingManager.swift in Sources */,
+				3649F9FA286AD4EF00E62D42 /* NetworkMonitor.swift in Sources */,
 				360382FF286A29CC00B9488C /* FilterViewModel.swift in Sources */,
 				362361752869797400E73456 /* JSONDataService.swift in Sources */,
 				3623616B286974DA00E73456 /* Themes.swift in Sources */,
+				3649F9F0286AC61300E62D42 /* CoreDataModel.xcdatamodeld in Sources */,
 				3623618C28699BD500E73456 /* SafeAreaInsetsKey.swift in Sources */,
+				3649F9F4286AC78900E62D42 /* CDMovie+CoreDataProperties.swift in Sources */,
 				3623619028699CE700E73456 /* SearchBar.swift in Sources */,
 				36236183286986B300E73456 /* ImageView.swift in Sources */,
 				362361532869737500E73456 /* MovieDiaryApp.swift in Sources */,
@@ -533,6 +573,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		3649F9EE286AC61300E62D42 /* CoreDataModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				3649F9EF286AC61300E62D42 /* CoreDataModel.xcdatamodel */,
+			);
+			currentVersion = 3649F9EF286AC61300E62D42 /* CoreDataModel.xcdatamodel */;
+			path = CoreDataModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 362361472869737500E73456 /* Project object */;
 }
