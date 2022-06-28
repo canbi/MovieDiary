@@ -13,8 +13,8 @@ enum GridDesign: String, CaseIterable, Identifiable {
     
     var iconName: String {
         switch self {
-        case .oneColumn: return "rectangle.grid.2x2"
-        case .twoColumn: return "rectangle.grid.1x2"
+        case .oneColumn: return "rectangle.grid.1x2"
+        case .twoColumn: return "rectangle.grid.2x2"
         }
     }
     

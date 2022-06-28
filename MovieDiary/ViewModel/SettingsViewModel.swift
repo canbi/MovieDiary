@@ -8,6 +8,7 @@
 import Foundation
 
 class SettingsViewModel: ObservableObject {
+    let mainVM: MainViewModel
     var settingManager: SettingManager?
     
     // Settings
@@ -26,8 +27,8 @@ class SettingsViewModel: ObservableObject {
     let apiURL = URL(string: "https://www.omdbapi.com")!
     
     
-    init(){
-        
+    init(mainVM: MainViewModel){
+        self.mainVM = mainVM
     }
     
     func setup(_ settingManager: SettingManager) {
@@ -41,5 +42,6 @@ class SettingsViewModel: ObservableObject {
             settingManager.theme = selectedTheme
             settingManager.gridDesign = selectedGrid
         }
+        mainVM.scrollViewProxy.scrollTo("top")
     }
 }

@@ -30,5 +30,6 @@ class FilterViewModel: ObservableObject {
         
         mainVM.searchType = selectedSearchType
         mainVM.searchYear = selectedSearchYear
+        mainVM.scrollViewProxy.scrollTo("top")
     }
 }

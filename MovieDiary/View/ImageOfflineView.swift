@@ -23,6 +23,7 @@ struct ImageOfflineView: View {
                 Image(uiImage: image)
                     .resizable()
                     .scaledToFit()
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
             } else {
                 ProgressView()
                     .frame(maxWidth: .infinity)

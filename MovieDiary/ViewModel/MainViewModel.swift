@@ -21,7 +21,7 @@ class MainViewModel: ObservableObject {
     
     // CoreData
     var coreDataService: CoreDataDataService!
-    @Published var favoriteMovies: [CDMovie] = []
+    @Published private var favoriteMovies: [CDMovie] = []
     @Published var filteredFavoriteMovies: [CDMovie] = []
     
     // Control
@@ -61,7 +61,7 @@ class MainViewModel: ObservableObject {
             return filteredFavoriteMovies.isEmpty
         }
         
-        return searchResults == nil || isPageLoading
+        return searchResults == nil || isPageLoading || searchResults?.search?.isEmpty ?? true
     }
     var showPageNumberState: Bool { searchResults != nil && !(searchResults?.search?.isEmpty ?? true) && !showingOnlyFavorites }
     var noInternetBannerState: Bool { !isInternetConnected && !showingOnlyFavorites }
@@ -89,6 +89,7 @@ class MainViewModel: ObservableObject {
                     self.networkMonitor!.stopMonitoring()
                     self.networkSubscription?.cancel()
                 } else {
+                    self.isInternetConnected = false
                     self.showingOnlyFavorites = true
                 }
             }
@@ -104,11 +105,8 @@ class MainViewModel: ObservableObject {
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
             .sink { [weak self] (returnedResults) in
                 guard let self = self else { return }
-                if self.showingOnlyFavorites {
-                    self.updateFilteredFavorites(returnedSearchText: returnedResults, type: self.searchType, year: self.searchYear)
-                } else {
-                    self.dataService.getSearchResult(for: returnedResults, type: self.searchType, year: self.searchYear)
-                }
+                self.dataService.getSearchResult(for: returnedResults, type: self.searchType, year: self.searchYear)
+                self.updateFilteredFavorites(returnedSearchText: returnedResults, type: self.searchType, year: self.searchYear)
             }
             .store(in: &cancellables)
         
@@ -123,22 +121,16 @@ class MainViewModel: ObservableObject {
         $searchType
             .sink { [weak self] (returnedSearchType) in
                 guard let self = self else { return }
-                if self.showingOnlyFavorites {
-                    self.updateFilteredFavorites(returnedSearchText: self.searchText, type: returnedSearchType, year: self.searchYear)
-                } else {
-                    self.dataService.getSearchResult(for: self.searchText, type: returnedSearchType, year: self.searchYear)
-                }
+                self.dataService.getSearchResult(for: self.searchText, type: returnedSearchType, year: self.searchYear)
+                self.updateFilteredFavorites(returnedSearchText: self.searchText, type: returnedSearchType, year: self.searchYear)
             }
             .store(in: &cancellables)
         
         $searchYear
             .sink { [weak self] (returnedSearchYear) in
                 guard let self = self else { return }
-                if self.showingOnlyFavorites {
-                    self.updateFilteredFavorites(returnedSearchText: self.searchText, type: self.searchType, year: returnedSearchYear)
-                } else {
-                    self.dataService.getSearchResult(for: self.searchText, type: self.searchType, year: returnedSearchYear)
-                }
+                self.dataService.getSearchResult(for: self.searchText, type: self.searchType, year: returnedSearchYear)
+                self.updateFilteredFavorites(returnedSearchText: self.searchText, type: self.searchType, year: returnedSearchYear)
             }
             .store(in: &cancellables)
     }
@@ -146,6 +138,11 @@ class MainViewModel: ObservableObject {
     func changePage(to number:Int){
         isPageLoading = true
         currentPageNumber = number
+        scrollViewProxy.scrollTo("top", anchor: .top)
+    }
+    
+    func goToFavoritesPage() {
+        showingOnlyFavorites.toggle()
         scrollViewProxy.scrollTo("top", anchor: .top)
     }
     

@@ -487,7 +487,7 @@ extension MainView {
     
     private var NoResultView: some View {
         NoBannerView {
-            NoBannerMessage("Not Found in this filters!")
+            NoBannerMessage("Not found in this filters!")
         }
     }
     
@@ -499,7 +499,7 @@ extension MainView {
     
     private var NoInternetView: some View {
         NoBannerView {
-            NoBannerMessage("No intenet connection !")
+            NoBannerMessage("No internet connection!")
         }
     }
 }
@@ -512,11 +512,11 @@ extension MainView {
         } label: {
             Image(systemName: "gear")
                 .font(.title)
-                .padding(.vertical)
-                .padding(.leading, 8)
+                .padding([.top, .horizontal], 8)
+                .padding(.bottom)
         }
         .sheet(isPresented: $vm.showingSettingsViewSheet) {
-            SettingsView(tintColor: settingManager.theme.mainColor)
+            SettingsView(mainVM: vm, tintColor: settingManager.theme.mainColor)
         }
         .tint(settingManager.theme.mainColor)
     }
@@ -527,20 +527,18 @@ extension MainView {
         } label: {
             Image(systemName: "line.3.horizontal.decrease.circle")
                 .font(.title)
-                .padding(.vertical)
-                .padding(.horizontal, 8)
+                .padding([.top, .horizontal], 8)
+                .padding(.bottom)
         }
         .tint(settingManager.theme.mainColor)
     }
     
     private var FavoritesButton: some View {
-        Button {
-            vm.showingOnlyFavorites.toggle()
-        } label: {
+        Button(action: vm.goToFavoritesPage) {
             Image(systemName: vm.showingOnlyFavorites ? "heart.fill" : "heart")
                 .font(.title)
-                .padding(.vertical)
-                .padding(.horizontal, 8)
+                .padding([.top, .horizontal], 8)
+                .padding(.bottom)
         }
         .tint(settingManager.theme.mainColor)
     }

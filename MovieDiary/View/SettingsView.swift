@@ -9,13 +9,14 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var settingManager: SettingManager
-    @StateObject var vm: SettingsViewModel = SettingsViewModel()
+    @StateObject var vm: SettingsViewModel
     @Environment(\.dismiss) var dismiss
     
     var tintColor: Color
     
-    init(tintColor: Color ){
+    init(mainVM: MainViewModel, tintColor: Color){
         self.tintColor = tintColor
+        self._vm = StateObject(wrappedValue: SettingsViewModel(mainVM: mainVM))
         UITableView.appearance().contentInset.top = -20
         UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: UIColor(tintColor)]
         UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: UIColor(tintColor)]
@@ -142,6 +143,6 @@ extension SettingsView {
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView(tintColor: .red)
+        SettingsView(mainVM: MainViewModel(), tintColor: .red)
     }
 }
